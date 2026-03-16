@@ -218,12 +218,24 @@
       <div class="hd-title">报告中心</div>
       <div class="hd-date" id="update-time"></div>
     </div>
-    <div class="hd-count" id="report-count">2 份报告</div>
+    <div class="hd-count" id="report-count">3 份报告</div>
   </div>
 </div>
 
 <!-- 研究报告 -->
 <div class="sec-label">研究报告</div>
+
+<a class="card" href="natcities_papers.html">
+  <div class="card-icon icon-research">🏙️</div>
+  <div class="card-info">
+    <div class="card-title">Nature Cities 论文数据库<span class="card-badge">NEW</span></div>
+    <div class="card-meta">Nature Cities · 173篇 · 2023–2026 · 2026.03</div>
+  </div>
+  <div class="card-right">
+    <button class="btn-short" onclick="shortLink(event,'natcities_papers.html',this)">短链</button>
+    <span class="card-arrow">›</span>
+  </div>
+</a>
 
 <a class="card" href="urban_biodiversity_infographic.html">
   <div class="card-icon icon-research">🔬</div>
@@ -240,7 +252,7 @@
 <a class="card" href="soil_ghg_report.html">
   <div class="card-icon icon-research">🌱</div>
   <div class="card-info">
-    <div class="card-title">土壤温室气体排放规律<span class="card-badge">NEW</span></div>
+    <div class="card-title">土壤温室气体排放规律</div>
     <div class="card-meta">IPCC AR6 · Nature · 2026.03</div>
   </div>
   <div class="card-right">
@@ -271,6 +283,7 @@
 
   // 自建短链映射：filename → go/N.html
   var shortMap = {
+    'natcities_papers.html': '3',
     'urban_biodiversity_infographic.html': '1',
     'soil_ghg_report.html': '2'
   };
