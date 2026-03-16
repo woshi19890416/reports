@@ -218,7 +218,7 @@
       <div class="hd-title">报告中心</div>
       <div class="hd-date" id="update-time"></div>
     </div>
-    <div class="hd-count" id="report-count">1 份报告</div>
+    <div class="hd-count" id="report-count">2 份报告</div>
   </div>
 </div>
 
@@ -228,11 +228,23 @@
 <a class="card" href="urban_biodiversity_infographic.html">
   <div class="card-icon icon-research">🔬</div>
   <div class="card-info">
-    <div class="card-title">城市生物多样性信息图<span class="card-badge">NEW</span></div>
+    <div class="card-title">城市生物多样性信息图</div>
     <div class="card-meta">Nature Reviews Biodiversity · 2026.03</div>
   </div>
   <div class="card-right">
     <button class="btn-short" onclick="shortLink(event,'urban_biodiversity_infographic.html',this)">短链</button>
+    <span class="card-arrow">›</span>
+  </div>
+</a>
+
+<a class="card" href="soil_ghg_report.html">
+  <div class="card-icon icon-research">🌱</div>
+  <div class="card-info">
+    <div class="card-title">土壤温室气体排放规律<span class="card-badge">NEW</span></div>
+    <div class="card-meta">IPCC AR6 · Nature · 2026.03</div>
+  </div>
+  <div class="card-right">
+    <button class="btn-short" onclick="shortLink(event,'soil_ghg_report.html',this)">短链</button>
     <span class="card-arrow">›</span>
   </div>
 </a>
@@ -259,7 +271,8 @@
 
   // 自建短链映射：filename → go/N.html
   var shortMap = {
-    'urban_biodiversity_infographic.html': '1'
+    'urban_biodiversity_infographic.html': '1',
+    'soil_ghg_report.html': '2'
   };
 
   function shortLink(e, filename, btn) {
