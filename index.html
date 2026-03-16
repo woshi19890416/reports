@@ -162,7 +162,6 @@
       text-align: center;
       transition: all 0.2s;
     }
-    .btn-short.loading { color: var(--amber); background: var(--amber-light); }
     .btn-short.copied  { color: var(--green); background: var(--green-light); }
     .card-arrow {
       font-size: 14px;
@@ -257,30 +256,18 @@
     String(d.getMonth()+1).padStart(2,'0') + '.' +
     String(d.getDate()).padStart(2,'0');
 
-  var shortCache = {};
+  // 自建短链映射：filename → go/N.html
+  var shortMap = {
+    'urban_biodiversity_infographic.html': '1'
+  };
 
   function shortLink(e, filename, btn) {
     e.preventDefault();
     e.stopPropagation();
-    var base = 'https://woshi19890416.github.io/reports/';
-    var longUrl = base + filename;
-    if (shortCache[filename]) { copyAndShow(shortCache[filename], btn); return; }
-    btn.classList.add('loading');
-    btn.textContent = '生成中';
-    fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(longUrl))
-      .then(function(r){ return r.text(); })
-      .then(function(s){
-        s = s.trim();
-        if (s.startsWith('http')) {
-          shortCache[filename] = s;
-          btn.classList.remove('loading');
-          copyAndShow(s, btn);
-        } else { throw 0; }
-      })
-      .catch(function(){
-        btn.classList.remove('loading');
-        copyAndShow(longUrl, btn);
-      });
+    var base = 'https://woshi19890416.github.io/reports/go/';
+    var id = shortMap[filename];
+    var url = id ? base + id + '.html' : 'https://woshi19890416.github.io/reports/' + filename;
+    copyAndShow(url, btn);
   }
 
   function copyAndShow(url, btn) {
