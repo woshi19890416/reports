@@ -74,12 +74,19 @@
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.2s;
+      min-width: 64px;
+      text-align: center;
     }
     .btn-share:active { background: rgba(99,102,241,0.3); transform: scale(0.95); }
     .btn-share.copied {
       background: rgba(16,185,129,0.15);
       border-color: rgba(16,185,129,0.3);
       color: #10b981;
+    }
+    .btn-share.loading {
+      background: rgba(245,158,11,0.15);
+      border-color: rgba(245,158,11,0.3);
+      color: #f59e0b;
     }
     .card-arrow { color: #334155; font-size: 16px; }
 
@@ -131,7 +138,7 @@
         <div class="card-arrow">&#8250;</div>
       </a>
       <div class="card-actions">
-        <button class="btn-share" onclick="shareReport('urban_biodiversity_infographic.html', this)">&#128279; 分享</button>
+        <button class="btn-share" onclick="shortLink('urban_biodiversity_infographic.html', this)">&#128279; 短链</button>
       </div>
     </div>
 
@@ -151,7 +158,7 @@
 
 </div>
 
-<div id="toast">&#10003; 链接已复制</div>
+<div id="toast">链接已复制</div>
 
 <footer>自动同步 · 由 WorkBuddy 生成</footer>
 
@@ -160,23 +167,56 @@
     '最后更新：' + new Date().toLocaleDateString('zh-CN') + ' ' +
     new Date().toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'});
 
-  function shareReport(filename, btn) {
-    const base = location.origin + location.pathname.replace(/\/[^\/]*$/, '');
-    const url = base + '/' + filename;
-    if (navigator.share) {
-      navigator.share({ title: document.title, url: url });
+  var shortLinkCache = {};
+
+  function shortLink(filename, btn) {
+    var base = 'https://reports.woshi19890416.workers.dev/';
+    var longUrl = base + filename;
+
+    // 已缓存，直接复制
+    if (shortLinkCache[filename]) {
+      copyAndShow(shortLinkCache[filename], btn);
       return;
     }
+
+    btn.classList.add('loading');
+    btn.textContent = '生成中...';
+
+    // 用 tinyurl API 生成短链
+    fetch('https://tinyurl.com/api-create.php?url=' + encodeURIComponent(longUrl))
+      .then(function(r) { return r.text(); })
+      .then(function(shortUrl) {
+        shortUrl = shortUrl.trim();
+        if (shortUrl.startsWith('http')) {
+          shortLinkCache[filename] = shortUrl;
+          btn.classList.remove('loading');
+          copyAndShow(shortUrl, btn);
+        } else {
+          throw new Error('invalid');
+        }
+      })
+      .catch(function() {
+        // API失败则直接复制原链接
+        btn.classList.remove('loading');
+        copyAndShow(longUrl, btn);
+      });
+  }
+
+  function copyAndShow(url, btn) {
     navigator.clipboard.writeText(url).then(function() {
       btn.classList.add('copied');
       btn.textContent = '已复制';
       setTimeout(function() {
         btn.classList.remove('copied');
-        btn.textContent = '分享';
-      }, 2000);
+        btn.textContent = '短链';
+      }, 2500);
       var toast = document.getElementById('toast');
+      toast.textContent = url.length < 40 ? '短链已复制: ' + url : '链接已复制';
       toast.classList.add('show');
-      setTimeout(function() { toast.classList.remove('show'); }, 2000);
+      setTimeout(function() { toast.classList.remove('show'); }, 3000);
+    }).catch(function() {
+      // 不支持clipboard，弹出链接让用户手动复制
+      prompt('复制此链接：', url);
     });
   }
 </script>
