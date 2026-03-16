@@ -16,9 +16,7 @@
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       padding: 24px 20px 20px;
       border-bottom: 1px solid #2d2d3d;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
     }
     header h1 { font-size: 20px; font-weight: 700; color: #fff; }
     header p { font-size: 12px; color: #64748b; margin-top: 4px; }
@@ -76,7 +74,6 @@
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.2s;
-      display: flex; align-items: center; gap: 4px;
     }
     .btn-share:active { background: rgba(99,102,241,0.3); transform: scale(0.95); }
     .btn-share.copied {
@@ -94,15 +91,13 @@
 
     .empty { text-align: center; color: #334155; font-size: 13px; padding: 20px; }
 
-    /* Toast 提示 */
     #toast {
       position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
       background: #10b981; color: #fff;
       padding: 10px 20px; border-radius: 20px;
       font-size: 13px; font-weight: 500;
       opacity: 0; transition: opacity 0.3s;
-      pointer-events: none; z-index: 999;
-      white-space: nowrap;
+      pointer-events: none; z-index: 999; white-space: nowrap;
     }
     #toast.show { opacity: 1; }
 
@@ -115,116 +110,73 @@
 <body>
 
 <header>
-  <h1>📊 我的报告中心</h1>
-  <p>点卡片查看报告 · 点分享获取独立链接</p>
+  <h1>&#128202; 我的报告中心</h1>
+  <p>点卡片查看 · 点分享获取独立链接</p>
   <div id="update-time"></div>
 </header>
 
 <div class="container">
 
-  <!-- 财经分析 -->
+  <!-- 研究报告 -->
   <div class="section">
-    <div class="section-title">💹 财经分析</div>
+    <div class="section-title">&#128300; 研究报告</div>
 
     <div class="card">
-      <a class="card-link" href="sector_flow_report_20260315.html">
-        <div class="card-icon icon-finance">📈</div>
+      <a class="card-link" href="urban_biodiversity_infographic.html">
+        <div class="card-icon icon-research">&#127807;</div>
         <div class="card-info">
-          <div class="card-title">板块资金流向报告<span class="badge badge-new">NEW</span></div>
-          <div class="card-meta">2026年3月15日</div>
+          <div class="card-title">城市生物多样性信息图<span class="badge badge-new">NEW</span></div>
+          <div class="card-meta">2026年3月</div>
         </div>
-        <div class="card-arrow">›</div>
+        <div class="card-arrow">&#8250;</div>
       </a>
       <div class="card-actions">
-        <button class="btn-share" onclick="shareReport('sector_flow_report_20260315.html', this)">
-          🔗 分享
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <a class="card-link" href="tech_sector_report.html">
-        <div class="card-icon icon-finance">💻</div>
-        <div class="card-info">
-          <div class="card-title">科技板块分析报告</div>
-          <div class="card-meta">2026年3月15日</div>
-        </div>
-        <div class="card-arrow">›</div>
-      </a>
-      <div class="card-actions">
-        <button class="btn-share" onclick="shareReport('tech_sector_report.html', this)">
-          🔗 分享
-        </button>
+        <button class="btn-share" onclick="shareReport('urban_biodiversity_infographic.html', this)">&#128279; 分享</button>
       </div>
     </div>
 
   </div>
 
-  <!-- 研究报告 -->
+  <!-- 财经分析 -->
   <div class="section">
-    <div class="section-title">🔬 研究报告</div>
-
-    <div class="card">
-      <a class="card-link" href="urban_biodiversity_infographic.html">
-        <div class="card-icon icon-research">🌿</div>
-        <div class="card-info">
-          <div class="card-title">城市生物多样性信息图</div>
-          <div class="card-meta">2026年3月</div>
-        </div>
-        <div class="card-arrow">›</div>
-      </a>
-      <div class="card-actions">
-        <button class="btn-share" onclick="shareReport('urban_biodiversity_infographic.html', this)">
-          🔗 分享
-        </button>
-      </div>
-    </div>
-
+    <div class="section-title">&#128185; 财经分析</div>
+    <div class="empty">财经报告将在此显示</div>
   </div>
 
   <!-- AI 动态 -->
   <div class="section">
-    <div class="section-title">🤖 AI 动态</div>
+    <div class="section-title">&#129302; AI 动态</div>
     <div class="empty">AI 日报将在此显示</div>
   </div>
 
 </div>
 
-<div id="toast">✅ 链接已复制</div>
+<div id="toast">&#10003; 链接已复制</div>
 
 <footer>自动同步 · 由 WorkBuddy 生成</footer>
 
 <script>
-  // 显示更新时间
-  const el = document.getElementById('update-time');
-  const now = new Date();
-  el.textContent = '最后更新：' + now.toLocaleDateString('zh-CN') + ' ' + now.toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'});
+  document.getElementById('update-time').textContent =
+    '最后更新：' + new Date().toLocaleDateString('zh-CN') + ' ' +
+    new Date().toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'});
 
-  // 分享报告：复制独立链接
   function shareReport(filename, btn) {
-    const base = window.location.origin + window.location.pathname.replace('index.html', '').replace(/\/$/, '');
+    const base = location.origin + location.pathname.replace(/\/[^\/]*$/, '');
     const url = base + '/' + filename;
-
-    // 优先用原生分享（手机支持）
     if (navigator.share) {
-      navigator.share({ title: '报告', url: url });
+      navigator.share({ title: document.title, url: url });
       return;
     }
-
-    // 降级：复制到剪贴板
-    navigator.clipboard.writeText(url).then(() => {
-      // 按钮变色提示
+    navigator.clipboard.writeText(url).then(function() {
       btn.classList.add('copied');
-      btn.textContent = '✅ 已复制';
-      setTimeout(() => {
+      btn.textContent = '已复制';
+      setTimeout(function() {
         btn.classList.remove('copied');
-        btn.innerHTML = '🔗 分享';
+        btn.textContent = '分享';
       }, 2000);
-
-      // Toast 提示
-      const toast = document.getElementById('toast');
+      var toast = document.getElementById('toast');
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
+      setTimeout(function() { toast.classList.remove('show'); }, 2000);
     });
   }
 </script>
