@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情日报 · 2026.03.16</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --red: #f85149;
+    --green: #3fb950;
+    --blue: #58a6ff;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --cyan: #39d353;
+  }
+  html { background: var(--bg); color: var(--text); font-family: -apple-system,"SF Pro Text","Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif; }
+  body { max-width: 960px; margin: 0 auto; padding: 20px 14px 60px; }
+
+  /* HEADER */
+  .hdr { padding-bottom: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .hdr-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+  .hdr h1 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .hdr-date { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .hdr-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 12px; }
+  .tag-red { background: #2a1515; color: var(--red); border: 1px solid #f8514933; }
+  .tag-green { background: #152a15; color: var(--green); border: 1px solid #3fb95033; }
+  .tag-blue { background: #152038; color: var(--blue); border: 1px solid #58a6ff33; }
+  .tag-yellow { background: #2a2010; color: var(--yellow); border: 1px solid #d2992233; }
+  .tag-purple { background: #251a38; color: var(--purple); border: 1px solid #bc8cff33; }
+
+  /* CONCLUSION BOX */
+  .conclusion { background: linear-gradient(135deg,#1a2d1a,#0d1f3a); border: 1px solid #3fb95033; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; }
+  .conclusion-label { font-size: 10px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+  .conclusion-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+  .conclusion-sub { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .conclusion-sub strong { color: var(--blue); }
+
+  /* SECTION */
+  .sec { margin-bottom: 28px; }
+  .sec-title { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .sec-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  /* INDEX GRID */
+  .idx-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+  @media(max-width:700px){ .idx-grid { grid-template-columns: repeat(2,1fr); } }
+  .idx-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .idx-name { font-size: 10px; color: var(--text2); font-weight: 600; margin-bottom: 6px; }
+  .idx-val { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+  .idx-chg { font-size: 12px; margin-top: 3px; font-weight: 600; }
+  .up { color: var(--red); }
+  .down { color: var(--green); }
+  .neu { color: var(--text2); }
+
+  /* EFFECT SCORE */
+  .effect-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+  @media(max-width:700px){ .effect-row { grid-template-columns: repeat(2,1fr); } }
+  .eff-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; text-align: center; }
+  .eff-num { font-size: 26px; font-weight: 800; }
+  .eff-label { font-size: 10px; color: var(--text2); margin-top: 3px; }
+  .eff-sub { font-size: 10px; margin-top: 2px; }
+
+  /* CAPITAL BAR */
+  .cap-list { display: flex; flex-direction: column; gap: 7px; }
+  .cap-item { display: flex; align-items: center; gap: 10px; }
+  .cap-name { font-size: 12px; color: var(--text); min-width: 90px; white-space: nowrap; }
+  .cap-bar-wrap { flex: 1; background: var(--bg3); border-radius: 3px; height: 6px; overflow: hidden; }
+  .cap-bar { height: 100%; border-radius: 3px; }
+  .cap-val { font-size: 12px; font-weight: 600; min-width: 54px; text-align: right; }
+  .cap-pct { font-size: 11px; min-width: 42px; text-align: right; }
+
+  /* SECTOR TABLE */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .tbl th { text-align: left; font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .04em; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .tbl td { padding: 9px 10px; border-bottom: 1px solid var(--bg3); vertical-align: middle; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: var(--bg3); }
+  .badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+  .badge-red { background: #2a1515; color: var(--red); }
+  .badge-green { background: #152a15; color: var(--green); }
+  .badge-blue { background: #152038; color: var(--blue); }
+  .badge-yellow { background: #2a2010; color: var(--yellow); }
+  .badge-purple { background: #251a38; color: var(--purple); }
+  .rank-dot { display: inline-block; width: 18px; height: 18px; background: var(--bg3); border-radius: 4px; font-size: 10px; font-weight: 700; text-align: center; line-height: 18px; color: var(--text2); }
+  .rank-1 { background: #3a2a00; color: var(--yellow); }
+  .rank-2 { background: #2a2a2a; color: #c0c0c0; }
+  .rank-3 { background: #2a1a10; color: var(--orange); }
+
+  /* LIMIT STOCK */
+  .ls-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+  @media(max-width:600px){ .ls-grid { grid-template-columns: 1fr; } }
+  .ls-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+  .ls-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .ls-name { font-size: 14px; font-weight: 700; }
+  .ls-nums { font-size: 22px; font-weight: 800; color: var(--red); }
+  .ls-meta { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+  /* MARKET CAPITAL */
+  .mkt-flow-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  @media(max-width:600px){ .mkt-flow-grid { grid-template-columns: 1fr; } }
+  .mf-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .mf-label { font-size: 10px; color: var(--text2); font-weight: 600; margin-bottom: 6px; }
+  .mf-val { font-size: 18px; font-weight: 700; }
+  .mf-sub { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  /* SIGNAL BOX */
+  .signal-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .signal-box { background: var(--bg2); border-radius: 8px; padding: 10px 14px; border-left: 3px solid; flex: 1; min-width: 200px; }
+  .signal-box-bull { border-color: var(--red); }
+  .signal-box-bear { border-color: var(--green); }
+  .signal-box-neu { border-color: var(--blue); }
+  .signal-box-warn { border-color: var(--yellow); }
+  .sb-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+  .sb-text { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .sb-text strong { color: var(--text); }
+
+  /* FOOTER */
+  .footer { font-size: 11px; color: var(--text2); margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <h1>A股行情日报</h1>
+      <div class="hdr-date">数据日期：2026年3月16日（周一）· 分析时间：2026.03.17</div>
+    </div>
+  </div>
+  <div class="hdr-tags">
+    <span class="tag tag-blue">芯片半导体 主线</span>
+    <span class="tag tag-blue">消费电子 主线</span>
+    <span class="tag tag-purple">AI硬件 次主线</span>
+    <span class="tag tag-green">创业板强势</span>
+    <span class="tag tag-yellow">炸板率偏高 谨慎</span>
+    <span class="tag tag-red">主力净流出</span>
+  </div>
+</div>
+
+<!-- 核心结论 -->
+<div class="conclusion">
+  <div class="conclusion-label">今日核心结论</div>
+  <div class="conclusion-title">科技科技还是科技 — 芯片半导体+消费电子是绝对主线</div>
+  <div class="conclusion-sub">
+    上证微跌-0.26%，<strong>创业板+1.41%、科创板+0.83%</strong>，成长科技板块大幅跑赢大盘。资金面：存储芯片单板块净流入85.9亿，半导体+电子合计超140亿，行业资金高度集中。涨停板块：芯片概念11家、机器人11家、华为+AI+DeepSeek+消费电子多方向联动，<strong>国产算力芯片+AI硬件产业链是当前最具赚钱效应的方向</strong>。炸板率35.3%偏高，情绪偏振荡，适合精选龙头而非追板。
+  </div>
+</div>
+
+<!-- 大盘指数 -->
+<div class="sec">
+  <div class="sec-title">大盘指数</div>
+  <div class="idx-grid">
+    <div class="idx-card">
+      <div class="idx-name">上证指数</div>
+      <div class="idx-val">4084.79</div>
+      <div class="idx-chg up">▼ -0.26% &nbsp;成交1.04万亿</div>
+    </div>
+    <div class="idx-card">
+      <div class="idx-name">深证成指</div>
+      <div class="idx-val">14307.58</div>
+      <div class="idx-chg down">▲ +0.19% &nbsp;成交1.29万亿</div>
+    </div>
+    <div class="idx-card" style="border-color:#3fb95055;">
+      <div class="idx-name">创业板指</div>
+      <div class="idx-val" style="color:var(--green);">3357.02</div>
+      <div class="idx-chg down">▲ +1.41% &nbsp;今日最强</div>
+    </div>
+    <div class="idx-card">
+      <div class="idx-name">科创50</div>
+      <div class="idx-val">1384.99</div>
+      <div class="idx-chg down">▲ +0.83%</div>
+    </div>
+  </div>
+</div>
+
+<!-- 赚钱效应指标 -->
+<div class="sec">
+  <div class="sec-title">赚钱效应指标</div>
+  <div class="effect-row">
+    <div class="eff-card">
+      <div class="eff-num up">44</div>
+      <div class="eff-label">涨停家数</div>
+      <div class="eff-sub neu">偏弱（低于正常60+）</div>
+    </div>
+    <div class="eff-card">
+      <div class="eff-num" style="color:var(--yellow);">24</div>
+      <div class="eff-label">炸板家数</div>
+      <div class="eff-sub" style="color:var(--yellow);">炸板率 35.3%</div>
+    </div>
+    <div class="eff-card">
+      <div class="eff-num down">5</div>
+      <div class="eff-label">跌停家数</div>
+      <div class="eff-sub neu">极少，市场安全</div>
+    </div>
+    <div class="eff-card">
+      <div class="eff-num" style="color:var(--purple);">5板</div>
+      <div class="eff-label">最高连板</div>
+      <div class="eff-sub neu">ST板块主导</div>
+    </div>
+  </div>
+  <div class="signal-row">
+    <div class="signal-box signal-box-warn">
+      <div class="sb-label" style="color:var(--yellow);">⚠ 情绪研判</div>
+      <div class="sb-text"><strong>偏振荡，分化明显</strong>。炸板率35.3%偏高，说明获利盘意愿强、涨停封板不稳。适合做低位题材+有业绩支撑的细分龙头，避免追高炸板股。</div>
+    </div>
+    <div class="signal-box signal-box-bull">
+      <div class="sb-label" style="color:var(--red);">📈 结构分析</div>
+      <div class="sb-text">成长科技>价值蓝筹，<strong>创业板跑赢上证近1.7%</strong>，成长风格主导。主力资金净流出433亿，但散户流入452亿补位，全市场资金整体均衡。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 大盘资金 -->
+<div class="sec">
+  <div class="sec-title">大盘资金面</div>
+  <div class="mkt-flow-grid">
+    <div class="mf-card">
+      <div class="mf-label">主力（超大单+大单）净流出</div>
+      <div class="mf-val up">-433.0 亿</div>
+      <div class="mf-sub">超大单 -254.5亿 &nbsp;|&nbsp; 大单 -176.4亿</div>
+    </div>
+    <div class="mf-card">
+      <div class="mf-label">中小单净流入（散户）</div>
+      <div class="mf-val down">+451.6 亿</div>
+      <div class="mf-sub">中单 -20.8亿 &nbsp;|&nbsp; 小单 +451.6亿</div>
+    </div>
+  </div>
+</div>
+
+<!-- 最强板块 -->
+<div class="sec">
+  <div class="sec-title">今日涨停最强板块 TOP 10</div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>排名</th>
+          <th>板块名称</th>
+          <th>涨停家数</th>
+          <th>最高连板</th>
+          <th>持续天数</th>
+          <th>涨跌幅</th>
+          <th>属性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank-dot rank-1">1</span></td>
+          <td><strong>ST板块</strong></td>
+          <td><span class="badge badge-red">16家</span></td>
+          <td>7天6板</td>
+          <td>1天</td>
+          <td class="down">+0.51%</td>
+          <td><span class="badge badge-yellow">炒作</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot rank-2">2</span></td>
+          <td><strong style="color:var(--blue);">芯片概念</strong></td>
+          <td><span class="badge badge-red">11家</span></td>
+          <td>5天3板</td>
+          <td>2天</td>
+          <td class="down">+0.79%</td>
+          <td><span class="badge badge-blue">主线</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot rank-3">3</span></td>
+          <td><strong style="color:var(--blue);">机器人概念</strong></td>
+          <td><span class="badge badge-red">11家</span></td>
+          <td>4天2板</td>
+          <td>3天</td>
+          <td class="down">+0.20%</td>
+          <td><span class="badge badge-blue">主线</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">4</span></td>
+          <td>一带一路</td>
+          <td><span class="badge badge-red">10家</span></td>
+          <td>4天4板</td>
+          <td>5天</td>
+          <td class="up">-0.45%</td>
+          <td><span class="badge badge-yellow">政策</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">5</span></td>
+          <td><strong style="color:var(--purple);">华为概念</strong></td>
+          <td><span class="badge badge-red">9家</span></td>
+          <td>5天3板</td>
+          <td>9天</td>
+          <td class="down">+0.48%</td>
+          <td><span class="badge badge-purple">持续</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">6</span></td>
+          <td><strong style="color:var(--purple);">人工智能</strong></td>
+          <td><span class="badge badge-red">9家</span></td>
+          <td>5天3板</td>
+          <td>1天</td>
+          <td class="down">+0.43%</td>
+          <td><span class="badge badge-purple">AI主线</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">7</span></td>
+          <td>储能</td>
+          <td><span class="badge badge-red">9家</span></td>
+          <td>10天4板</td>
+          <td>18天</td>
+          <td class="up">-0.39%</td>
+          <td><span class="badge badge-green">持续轮动</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">8</span></td>
+          <td><strong style="color:var(--blue);">消费电子概念</strong></td>
+          <td><span class="badge badge-red">8家</span></td>
+          <td>3天2板</td>
+          <td>1天</td>
+          <td class="down">+0.85%</td>
+          <td><span class="badge badge-blue">爆发</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">9</span></td>
+          <td><strong style="color:var(--purple);">DeepSeek概念</strong></td>
+          <td><span class="badge badge-red">8家</span></td>
+          <td>3天2板</td>
+          <td>1天</td>
+          <td class="down">+0.34%</td>
+          <td><span class="badge badge-purple">AI主线</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank-dot">10</span></td>
+          <td>光伏概念</td>
+          <td><span class="badge badge-red">8家</span></td>
+          <td>10天4板</td>
+          <td>10天</td>
+          <td class="up">-0.29%</td>
+          <td><span class="badge badge-green">轮动</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 资金流向 -->
+<div class="sec">
+  <div class="sec-title">行业资金净流入 TOP 10（亿元）</div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;">
+    <div class="cap-list">
+      <div class="cap-item">
+        <span class="cap-name">电子</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--red);width:89%"></div></div>
+        <span class="cap-val down">+76.2亿</span>
+        <span class="cap-pct up">+1.60%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">半导体</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--red);width:74%"></div></div>
+        <span class="cap-val down">+63.7亿</span>
+        <span class="cap-pct down">+2.34%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">数字芯片设计</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--red);width:58%"></div></div>
+        <span class="cap-val down">+49.2亿</span>
+        <span class="cap-pct down">+3.14%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">元件</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:30%"></div></div>
+        <span class="cap-val down">+25.3亿</span>
+        <span class="cap-pct down">+2.96%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">印制电路板</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:27%"></div></div>
+        <span class="cap-val down">+22.5亿</span>
+        <span class="cap-pct down">+3.29%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">通信网络设备</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:25%"></div></div>
+        <span class="cap-val down">+20.8亿</span>
+        <span class="cap-pct down">+0.61%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">乘用车</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--green);width:24%"></div></div>
+        <span class="cap-val down">+20.5亿</span>
+        <span class="cap-pct down">+1.35%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">电动乘用车</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--green);width:24%"></div></div>
+        <span class="cap-val down">+20.0亿</span>
+        <span class="cap-pct down">+3.43%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">通信</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:21%"></div></div>
+        <span class="cap-val down">+17.5亿</span>
+        <span class="cap-pct down">+0.15%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">航运</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--yellow);width:20%"></div></div>
+        <span class="cap-val down">+16.7亿</span>
+        <span class="cap-pct down">+3.80%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 概念资金 -->
+<div class="sec">
+  <div class="sec-title">概念资金净流入 TOP 10（亿元）</div>
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;">
+    <div class="cap-list">
+      <div class="cap-item">
+        <span class="cap-name">存储芯片</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--red);width:100%"></div></div>
+        <span class="cap-val down">+85.9亿</span>
+        <span class="cap-pct down">+2.89%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">百元股</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--orange);width:96%"></div></div>
+        <span class="cap-val down">+82.2亿</span>
+        <span class="cap-pct down">+1.10%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">基金重仓</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--orange);width:53%"></div></div>
+        <span class="cap-val down">+45.6亿</span>
+        <span class="cap-pct down">+0.93%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">国产芯片</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--red);width:48%"></div></div>
+        <span class="cap-val down">+41.1亿</span>
+        <span class="cap-pct down">+1.22%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">汽车芯片</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--green);width:42%"></div></div>
+        <span class="cap-val down">+35.4亿</span>
+        <span class="cap-pct down">+2.10%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">消费电子概念</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:40%"></div></div>
+        <span class="cap-val down">+34.1亿</span>
+        <span class="cap-pct down">+0.84%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">智能穿戴</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:36%"></div></div>
+        <span class="cap-val down">+30.8亿</span>
+        <span class="cap-pct down">+1.03%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">无线耳机</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--blue);width:33%"></div></div>
+        <span class="cap-val down">+28.4亿</span>
+        <span class="cap-pct down">+1.09%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">AIPC</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--purple);width:33%"></div></div>
+        <span class="cap-val down">+28.1亿</span>
+        <span class="cap-pct down">+1.73%</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-name">AI眼镜</span>
+        <div class="cap-bar-wrap"><div class="cap-bar" style="background:var(--purple);width:27%"></div></div>
+        <span class="cap-val down">+23.4亿</span>
+        <span class="cap-pct down">+1.07%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 连板龙头 -->
+<div class="sec">
+  <div class="sec-title">连板龙头股（≥2板）</div>
+  <div class="ls-grid">
+    <div class="ls-card" style="border-color:#f8514933;">
+      <div class="ls-head">
+        <div>
+          <div class="ls-name">法尔胜</div>
+          <div style="font-size:11px;color:var(--text2);">000890.SZ · 环保设备</div>
+        </div>
+        <div class="ls-nums">3板</div>
+      </div>
+      <div class="ls-meta">
+        收盘 12.20 &nbsp;|&nbsp; 成交 15.3亿<br>
+        炸板4次 &nbsp;|&nbsp; 9天内6次涨停 &nbsp;|&nbsp; 封单254万<br>
+        <span style="color:var(--yellow);">⚠ 炸板频繁，分歧较大</span>
+      </div>
+    </div>
+    <div class="ls-card" style="border-color:#f8514933;">
+      <div class="ls-head">
+        <div>
+          <div class="ls-name">三房巷</div>
+          <div style="font-size:11px;color:var(--text2);">600370.SH · 化学纤维</div>
+        </div>
+        <div class="ls-nums">3板</div>
+      </div>
+      <div class="ls-meta">
+        收盘 3.00 &nbsp;|&nbsp; 成交 5.0亿<br>
+        炸板1次 &nbsp;|&nbsp; 3天内3次涨停 &nbsp;|&nbsp; 封单548万<br>
+        <span style="color:var(--green);">✓ 封板稳健，情绪较高</span>
+      </div>
+    </div>
+    <div class="ls-card" style="border-color:#3fb95033;">
+      <div class="ls-head">
+        <div>
+          <div class="ls-name">亚翔集成</div>
+          <div style="font-size:11px;color:var(--text2);">603929.SH · 专业工程（半导体厂房）</div>
+        </div>
+        <div class="ls-nums">2板</div>
+      </div>
+      <div class="ls-meta">
+        收盘 154.91 &nbsp;|&nbsp; 成交 14.1亿<br>
+        炸板1次 &nbsp;|&nbsp; 2天内2次涨停 &nbsp;|&nbsp; 封单1.81亿<br>
+        <span style="color:var(--blue);">★ 半导体产线工程龙头，主线标的</span>
+      </div>
+    </div>
+    <div class="ls-card">
+      <div class="ls-head">
+        <div>
+          <div class="ls-name">京投发展</div>
+          <div style="font-size:11px;color:var(--text2);">600683.SH · 房地产开发</div>
+        </div>
+        <div class="ls-nums">2板</div>
+      </div>
+      <div class="ls-meta">
+        收盘 9.64 &nbsp;|&nbsp; 成交 2.3亿<br>
+        炸板0次 &nbsp;|&nbsp; 2天内2次涨停 &nbsp;|&nbsp; 封单1.25亿<br>
+        <span style="color:var(--text2);">地产政策方向，封板干净</span>
+      </div>
+    </div>
+    <div class="ls-card">
+      <div class="ls-head">
+        <div>
+          <div class="ls-name">锡华科技</div>
+          <div style="font-size:11px;color:var(--text2);">603248.SH · 风电设备</div>
+        </div>
+        <div class="ls-nums">2板</div>
+      </div>
+      <div class="ls-meta">
+        收盘 31.02 &nbsp;|&nbsp; 成交 11.8亿<br>
+        炸板1次 &nbsp;|&nbsp; 2天内2次涨停 &nbsp;|&nbsp; 封单549万<br>
+        <span style="color:var(--text2);">新能源细分方向</span>
+      </div>
+    </div>
+    <div class="ls-card">
+      <div class="ls-head">
+        <div>
+          <div class="ls-name">赤天化</div>
+          <div style="font-size:11px;color:var(--text2);">600227.SH · 农化制品</div>
+        </div>
+        <div class="ls-nums">2板</div>
+      </div>
+      <div class="ls-meta">
+        收盘 4.81 &nbsp;|&nbsp; 成交 20.9亿<br>
+        炸板5次 &nbsp;|&nbsp; 4天内2次涨停 &nbsp;|&nbsp; 封单287万<br>
+        <span style="color:var(--yellow);">⚠ 炸板5次，投机性强</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 赚钱效应方向汇总 -->
+<div class="sec">
+  <div class="sec-title">赚钱效应方向筛选</div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="background:var(--bg2);border:1px solid #f8514933;border-left:3px solid var(--red);border-radius:8px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">★★★ 第一主线 · 芯片半导体</div>
+      <div style="font-size:13px;line-height:1.8;color:var(--text2);">
+        存储芯片+85.9亿、半导体+63.7亿、数字芯片设计+49.2亿、国产芯片+41.1亿、汽车芯片+35.4亿，<strong style="color:var(--text);">五大子方向合计净流入超275亿</strong>，资金最集中。涨停板块中芯片概念11家位列第2，持续2日上榜。代表方向：国产CPU/GPU设计、存储芯片、芯片设备耗材、半导体工程（亚翔集成类）。
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid #58a6ff33;border-left:3px solid var(--blue);border-radius:8px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">★★★ 第一主线 · 消费电子+AI硬件</div>
+      <div style="font-size:13px;line-height:1.8;color:var(--text2);">
+        消费电子概念+34.1亿、智能穿戴+30.8亿、无线耳机+28.4亿、AIPC+28.1亿、AI眼镜+23.4亿，<strong style="color:var(--text);">AI端侧硬件产业链全面爆发</strong>。创业板+1.41%，苹果链+AI眼镜链双驱动，涨停8家位列第8。代表方向：AI眼镜供应链、AIPC配件、TWS耳机、智能手表。
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid #bc8cff33;border-left:3px solid var(--purple);border-radius:8px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">★★ 次主线 · 机器人+华为+AI软件</div>
+      <div style="font-size:13px;line-height:1.8;color:var(--text2);">
+        机器人概念11家涨停（持续3日），华为概念9家（持续9日！），人工智能9家，DeepSeek8家。<strong style="color:var(--text);">华为概念已持续9天上榜，是中期持续性最强的方向</strong>；机器人和AI软件是跟涨弹性品种。
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid #d2992233;border-left:3px solid var(--yellow);border-radius:8px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">★ 关注 · 汽车电动车</div>
+      <div style="font-size:13px;line-height:1.8;color:var(--text2);">
+        乘用车+20.5亿、电动乘用车+20.0亿，资金有一定流入但涨停板块未上榜。<strong style="color:var(--text);">属于资金分散方向，适合配置而非追板</strong>，关注汽车芯片受益股（兼具芯片+汽车双主题）。
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid #30363d;border-left:3px solid var(--text2);border-radius:8px;padding:14px 16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">⬇ 回避 · ST股票</div>
+      <div style="font-size:13px;line-height:1.8;color:var(--text2);">
+        虽然ST板块以16家涨停占据第1，但均为低价ST/＊ST股，无实质业绩支撑，纯属退市新规短暂炒作，<strong style="color:var(--yellow);">不具备持续赚钱效应，建议回避。</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>数据来源</strong>：Tushare · 东方财富 · 同花顺 &nbsp;|&nbsp; <strong>数据日期</strong>：2026年3月16日（盘后）&nbsp;|&nbsp; <strong>分析日期</strong>：2026年3月17日<br>
+  本报告由 AI 基于公开市场数据自动生成，仅供参考，不构成投资建议。投资有风险，入市需谨慎。
+</div>
+
+</body>
+</html>
