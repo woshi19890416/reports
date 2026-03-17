@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恒生科技指数深度分析 · 2026.03.17</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --red: #f85149;
+    --green: #3fb950;
+    --blue: #58a6ff;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --accent: #1f6feb;
+  }
+  html { background: var(--bg); color: var(--text); font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  body { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  /* HEADER */
+  .header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 32px; }
+  .header-badge { display: inline-flex; align-items: center; gap: 6px; background: #1a2a1a; border: 1px solid #3fb95044; color: var(--green); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .header-badge::before { content: ""; width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
+  .header-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+  .meta-item { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 4px; }
+  .meta-item strong { color: var(--text); }
+
+  /* VERDICT BANNER */
+  .verdict { background: linear-gradient(135deg, #1a2d1a 0%, #0d1f2d 100%); border: 1px solid #3fb95033; border-radius: 12px; padding: 20px 24px; margin-bottom: 28px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; }
+  .verdict-label { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .verdict-value { font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -0.02em; }
+  .verdict-sub { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .verdict-right { text-align: right; }
+  .verdict-tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
+  .tag-buy { background: #1a3a1a; color: var(--green); border: 1px solid #3fb95055; }
+  .tag-risk { background: #2a2015; color: var(--yellow); border: 1px solid #d2992255; }
+
+  /* GRID LAYOUT */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 400px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* CARDS */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .card-label { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .card-value { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+  .card-change { font-size: 12px; margin-top: 4px; }
+  .up { color: var(--red); }
+  .down { color: var(--green); }
+  .neu { color: var(--text2); }
+
+  /* SECTION */
+  .section { margin-bottom: 32px; }
+  .section-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  /* TABLE */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .tbl th { text-align: left; font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .tbl td { padding: 10px 12px; border-bottom: 1px solid #21262d; color: var(--text); vertical-align: middle; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: var(--bg3); }
+  .signal { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+  .signal-bull { background: #1a3a1a; color: var(--green); }
+  .signal-bear { background: #3a1a1a; color: var(--red); }
+  .signal-neu { background: #1a1a2a; color: var(--blue); }
+  .signal-warn { background: #2a2a1a; color: var(--yellow); }
+
+  /* PROGRESS BAR */
+  .progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-bar { flex: 1; height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; }
+  .fill-green { background: var(--green); }
+  .fill-red { background: var(--red); }
+  .fill-yellow { background: var(--yellow); }
+  .fill-blue { background: var(--blue); }
+  .progress-val { font-size: 12px; font-weight: 600; min-width: 40px; text-align: right; }
+
+  /* DEBATE */
+  .debate-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .debate-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+  .debate-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .role-bull { color: var(--red); }
+  .role-bear { color: var(--green); }
+  .role-mgr { color: var(--blue); }
+  .role-risk { color: var(--purple); }
+  .role-trader { color: var(--orange); }
+  .debate-body { padding: 14px 16px; font-size: 13px; line-height: 1.7; color: var(--text2); }
+  .debate-body strong { color: var(--text); }
+
+  /* OPERATION TABLE */
+  .op-table { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .op-row { display: flex; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 12px; }
+  .op-row:last-child { border-bottom: none; }
+  .op-label { font-size: 11px; color: var(--text2); min-width: 80px; }
+  .op-value { font-size: 14px; font-weight: 600; color: var(--text); }
+  .op-value.highlight-green { color: var(--green); }
+  .op-value.highlight-red { color: var(--red); }
+  .op-value.highlight-yellow { color: var(--yellow); }
+
+  /* RISK PILLS */
+  .risk-list { display: flex; flex-direction: column; gap: 10px; }
+  .risk-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start; }
+  .risk-num { background: #2a1a1a; color: var(--red); font-size: 10px; font-weight: 800; width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .risk-text { font-size: 13px; line-height: 1.6; color: var(--text2); }
+  .risk-text strong { color: var(--text); }
+
+  /* DISCLAIMER */
+  .disclaimer { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-size: 11px; color: var(--text2); line-height: 1.6; margin-top: 32px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">投资分析</div>
+  <h1>恒生科技指数深度分析</h1>
+  <div class="header-meta">
+    <div class="meta-item">标的：<strong>HKTECH · 恒生科技指数</strong></div>
+    <div class="meta-item">分析日期：<strong>2026年3月17日</strong></div>
+    <div class="meta-item">数据截至：<strong>3月16日收盘</strong></div>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div class="verdict">
+  <div>
+    <div class="verdict-label">最终建议</div>
+    <div class="verdict-value">BUY · 轻仓做多</div>
+    <div class="verdict-sub">仓位 20-25% · 分批建仓 · 短至中期持有</div>
+  </div>
+  <div class="verdict-right">
+    <div class="verdict-tag tag-buy">技术金叉确认</div><br>
+    <div class="verdict-tag tag-risk">中性风险等级</div>
+  </div>
+</div>
+
+<!-- 核心数据 -->
+<div class="section">
+  <div class="section-title">核心行情</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-label">最新收盘</div>
+      <div class="card-value">5111.78</div>
+      <div class="card-change up">近5日 +3.44%</div>
+    </div>
+    <div class="card">
+      <div class="card-label">近6月变化</div>
+      <div class="card-value down">-10.77%</div>
+      <div class="card-change neu">高点 6715 → 现价</div>
+    </div>
+    <div class="card">
+      <div class="card-label">近6月低点</div>
+      <div class="card-value">4750</div>
+      <div class="card-change up">已反弹 +7.6%</div>
+    </div>
+  </div>
+</div>
+
+<!-- 技术指标 -->
+<div class="section">
+  <div class="section-title">技术指标</div>
+  <div class="card" style="padding:0; overflow:hidden;">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>指标</th>
+          <th>数值</th>
+          <th>vs 现价</th>
+          <th>信号</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>SMA10</td>
+          <td>4962.45</td>
+          <td class="up">+3.0%</td>
+          <td><span class="signal signal-bull">多头</span></td>
+        </tr>
+        <tr>
+          <td>SMA20</td>
+          <td>5106.30</td>
+          <td class="up">+0.1%</td>
+          <td><span class="signal signal-bull">已站上</span></td>
+        </tr>
+        <tr>
+          <td>SMA50</td>
+          <td>5450.05</td>
+          <td class="down">-6.6%</td>
+          <td><span class="signal signal-warn">阻力</span></td>
+        </tr>
+        <tr>
+          <td>SMA120</td>
+          <td>5702.82</td>
+          <td class="down">-10.5%</td>
+          <td><span class="signal signal-bear">压制</span></td>
+        </tr>
+        <tr>
+          <td>RSI(14)</td>
+          <td>42.23</td>
+          <td>—</td>
+          <td><span class="signal signal-neu">中性偏弱</span></td>
+        </tr>
+        <tr>
+          <td>MACD DIF</td>
+          <td>-126.19</td>
+          <td>—</td>
+          <td><span class="signal signal-warn">零轴下</span></td>
+        </tr>
+        <tr>
+          <td>MACD 柱</td>
+          <td>+23.34</td>
+          <td>—</td>
+          <td><span class="signal signal-bull">金叉形成</span></td>
+        </tr>
+        <tr>
+          <td>布林上轨</td>
+          <td>5476.17</td>
+          <td class="down">-7.1%</td>
+          <td><span class="signal signal-warn">压力</span></td>
+        </tr>
+        <tr>
+          <td>布林中轨</td>
+          <td>5106.30</td>
+          <td class="up">+0.1%</td>
+          <td><span class="signal signal-bull">已站上</span></td>
+        </tr>
+        <tr>
+          <td>布林下轨</td>
+          <td>4736.42</td>
+          <td class="down">-7.3%</td>
+          <td><span class="signal signal-neu">强支撑</span></td>
+        </tr>
+        <tr>
+          <td>ATR(14)</td>
+          <td>137.13</td>
+          <td>—</td>
+          <td><span class="signal signal-warn">波动大</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 关键位置 -->
+<div class="section">
+  <div class="section-title">关键支撑与阻力</div>
+  <div class="card">
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">上方阻力</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">5450</span>
+          <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:40%"></div></div>
+          <span class="progress-val" style="color:var(--yellow);">SMA50</span>
+        </div>
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">5476</span>
+          <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:40%"></div></div>
+          <span class="progress-val" style="color:var(--yellow);">布林上轨</span>
+        </div>
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">5703</span>
+          <div class="progress-bar"><div class="progress-fill fill-red" style="width:65%"></div></div>
+          <span class="progress-val" style="color:var(--red);">SMA120</span>
+        </div>
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">6715</span>
+          <div class="progress-bar"><div class="progress-fill fill-red" style="width:100%"></div></div>
+          <span class="progress-val" style="color:var(--red);">6月高点</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">下方支撑</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">4900</span>
+          <div class="progress-bar"><div class="progress-fill fill-blue" style="width:50%"></div></div>
+          <span class="progress-val" style="color:var(--blue);">布林中轨</span>
+        </div>
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">4750</span>
+          <div class="progress-bar"><div class="progress-fill fill-green" style="width:70%"></div></div>
+          <span class="progress-val" style="color:var(--green);">强止损</span>
+        </div>
+        <div class="progress-wrap">
+          <span style="font-size:12px;color:var(--text2);min-width:55px;">4736</span>
+          <div class="progress-bar"><div class="progress-fill fill-green" style="width:75%"></div></div>
+          <span class="progress-val" style="color:var(--green);">布林下轨</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 资金面 -->
+<div class="section">
+  <div class="section-title">资金面分析</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">年内南向累计净流入</div>
+      <div class="card-value" style="font-size:20px;">1800亿</div>
+      <div class="card-change up">港元 · 36个交易日</div>
+    </div>
+    <div class="card">
+      <div class="card-label">单日最高净买入</div>
+      <div class="card-value" style="font-size:20px;">372亿</div>
+      <div class="card-change up">港元 · 3月9日 · 历史新高</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label" style="margin-bottom:12px;">资金面综合评价</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">南向资金（港股通）</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6;">年内净流入规模堪称历史级别，36交易日中27天净流入，是当前最确定的多头力量。3月16日出现净卖出（卖出362亿 vs 买入334亿），高位存在小幅分歧。</div>
+      </div>
+      <div style="height:1px;background:var(--border);"></div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">全球资金</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6;">欧美长线资金1月净流入86亿美元，中东资本持续加仓港股，多路资金合力介入。多家海外中国基金对腾讯、阿里大手笔加仓。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 多空辩论 -->
+<div class="section">
+  <div class="section-title">多空辩论</div>
+
+  <div class="debate-card">
+    <div class="debate-header">
+      <div class="debate-role role-bull">Bull · 多头论证</div>
+    </div>
+    <div class="debate-body">
+      MACD形成金叉，RSI从底部回升未进超买，布林中轨站稳，技术面切换信号明确。<strong>资金面是核心优势</strong>：年内南向净流入1800亿港元、单日372亿创历史新高，这是机构系统性战略配置，非散户脉冲式买入。中东资本、欧美长线资金同步介入，多路资金底部支撑牢固。当前到SMA50（5450）压力位还有6.6%弹性，估值处于历史极低区间，时间和资金都站在多头一边。
+    </div>
+  </div>
+
+  <div class="debate-card">
+    <div class="debate-header">
+      <div class="debate-role role-bear">Bear · 空头论证</div>
+    </div>
+    <div class="debate-body">
+      近6月跌幅10.77%发生在资金持续净流入背景下，说明流入量不足以对抗基本面压制。<strong>MACD金叉位于零轴下方</strong>（DIF -126，信号线-150），零轴下方金叉历史上假信号频发。SMA50（5450）和SMA120（5703）构成极重压力带，多次测试均告失败。3月16日港股通净卖出（362亿卖出 vs 334亿买入），聪明钱在5000+位置已开始止盈，多头内部出现分歧。美联储政策不确定性、美国通胀风险是无法靠资金流对冲的系统性风险。
+    </div>
+  </div>
+
+  <div class="debate-card">
+    <div class="debate-header">
+      <div class="debate-role role-mgr">Research Manager · 裁决</div>
+    </div>
+    <div class="debate-body">
+      当前位置是低风险区域，适合以小仓位参与反弹，但不适合重仓追涨。入场区间5050–5150，首目标5430–5480（SMA50），止损4750，仓位不超过总体20–25%，分批建仓。若站稳5500上方可加仓，失守4750止损出场。<strong>投资计划：轻仓持有/做多。</strong>
+    </div>
+  </div>
+</div>
+
+<!-- 操作建议 -->
+<div class="section">
+  <div class="section-title">操作建议</div>
+  <div class="op-table">
+    <div class="op-row">
+      <div class="op-label">入场区间</div>
+      <div class="op-value highlight-green">5050 ~ 5150（分两批）</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">首目标</div>
+      <div class="op-value highlight-green">5430 ~ 5480（SMA50区域）</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">次目标</div>
+      <div class="op-value">5700 ~ 5800（SMA120/密集成交区）</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">止损（减仓）</div>
+      <div class="op-value highlight-yellow">4900（跌破布林中轨减仓）</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">止损（强平）</div>
+      <div class="op-value highlight-red">4750（近6月低点破位止损）</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">仓位</div>
+      <div class="op-value">20-25% · 分批建仓</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">持仓周期</div>
+      <div class="op-value">短至中期（1-4周）</div>
+    </div>
+    <div class="op-row">
+      <div class="op-label">关注事件</div>
+      <div class="op-value" style="font-size:12px;color:var(--text2);">南向资金每日净流入；SMA50能否突破；美联储3月议息；腾讯/阿里财报</div>
+    </div>
+  </div>
+</div>
+
+<!-- 风险提示 -->
+<div class="section">
+  <div class="section-title">风险提示</div>
+  <div class="risk-list">
+    <div class="risk-item">
+      <div class="risk-num">1</div>
+      <div class="risk-text"><strong>技术假信号风险</strong>：MACD金叉位于零轴下方，历史上此类金叉失败概率不低，需以价格行为确认，5000以下破位需立即止损。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-num">2</div>
+      <div class="risk-text"><strong>宏观压制风险</strong>：美国通胀超预期可能触发全球风险资产回调，港股科技板块估值对利率极度敏感，需密切关注美联储政策动向。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-num">3</div>
+      <div class="risk-text"><strong>资金持续性风险</strong>：南向资金是当前最大多头支柱，一旦净流入减弱，底部支撑将大幅弱化，指数再测4750的概率显著上升。</div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  <strong>免责声明</strong><br>
+  本报告由 AI 基于公开市场数据和多角色辩论方法论生成，仅供参考，不构成投资建议。投资有风险，入市需谨慎。过去的表现不代表未来的结果，请在专业投资顾问的指导下做出投资决策。
+</div>
+
+</body>
+</html>
