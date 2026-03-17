@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nature Ecology &amp; Evolution 论文数据库 · 20篇</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+  --text:#e6edf3;--text2:#8b949e;--text3:#57606a;
+  --accent:#58a6ff;--accent2:#1f6feb;--green:#3fb950;--amber:#d29922;
+  --red:#f85149;--purple:#bc8cff;--teal:#39d353;
+}
+html{background:var(--bg);}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* HEADER */
+.header{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:24px 20px 20px;position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(10px);
+}
+.header-inner{max-width:1200px;margin:0 auto;}
+.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.journal-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#1c2128;border:1px solid var(--border);
+  border-radius:6px;padding:6px 12px;
+}
+.journal-dot{width:8px;height:8px;border-radius:50%;background:#3fb950;flex-shrink:0;}
+.journal-name{font-size:13px;font-weight:600;color:var(--text);}
+.journal-sub{font-size:11px;color:var(--text2);}
+.header-stats{display:flex;gap:16px;flex-wrap:wrap;}
+.stat-chip{
+  font-size:12px;font-weight:500;color:var(--text2);
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;padding:4px 12px;
+}
+.stat-chip span{color:var(--accent);font-weight:700;}
+
+/* TOOLBAR */
+.toolbar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:12px 20px;
+}
+.toolbar-inner{max-width:1200px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.search-wrap{flex:1;min-width:200px;position:relative;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:0.4;}
+#searchInput{
+  width:100%;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;padding:8px 12px 8px 34px;
+  font-size:13px;color:var(--text);outline:none;
+  transition:border-color 0.2s;
+}
+#searchInput:focus{border-color:var(--accent2);}
+#searchInput::placeholder{color:var(--text3);}
+select{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;padding:8px 10px;font-size:12px;color:var(--text2);
+  outline:none;cursor:pointer;
+}
+select:focus{border-color:var(--accent2);}
+.filter-tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.tag-btn{
+  font-size:11px;font-weight:500;
+  padding:4px 10px;border-radius:20px;cursor:pointer;
+  border:1px solid var(--border);background:var(--surface2);color:var(--text2);
+  transition:all 0.15s;white-space:nowrap;
+}
+.tag-btn:hover,.tag-btn.active{
+  background:var(--accent2);border-color:var(--accent);color:var(--text);
+}
+.result-count{font-size:12px;color:var(--text3);margin-left:auto;white-space:nowrap;}
+
+/* MAIN LAYOUT */
+.main{max-width:1200px;margin:0 auto;padding:20px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+
+/* PAPER CARD */
+.paper-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:18px;display:flex;flex-direction:column;gap:10px;
+  transition:border-color 0.2s,transform 0.15s;cursor:pointer;
+  text-decoration:none;
+}
+.paper-card:hover{border-color:var(--accent2);transform:translateY(-1px);}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.card-num{
+  font-size:11px;font-weight:700;color:var(--text3);
+  min-width:24px;flex-shrink:0;padding-top:1px;
+}
+.card-date{
+  font-size:11px;color:var(--text3);flex-shrink:0;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:4px;padding:2px 7px;white-space:nowrap;
+}
+.card-title{
+  font-size:14px;font-weight:600;color:var(--text);line-height:1.5;
+  flex:1;
+}
+.card-authors{
+  font-size:12px;color:var(--text2);line-height:1.4;
+}
+.card-authors span{color:var(--accent);}
+.card-abstract{
+  font-size:12px;color:var(--text2);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.card-abstract.expanded{-webkit-line-clamp:unset;}
+.card-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px;}
+.topic-tag{
+  font-size:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+  padding:3px 8px;border-radius:4px;border:1px solid transparent;
+}
+.topic-climate{background:#0d1f2d;border-color:#1f6feb;color:#58a6ff;}
+.topic-evolution{background:#1a0d2e;border-color:#6e40c9;color:#bc8cff;}
+.topic-ecology{background:#0d2214;border-color:#1a7f37;color:#3fb950;}
+.topic-marine{background:#0d2229;border-color:#1a6b7f;color:#39c5cf;}
+.topic-microbial{background:#2a1a0d;border-color:#7f4a1a;color:#d29922;}
+.topic-paleontology{background:#2a1a0d;border-color:#8a4a1a;color:#e3823a;}
+.topic-biodiversity{background:#0d221d;border-color:#1a7f5e;color:#39d3a5;}
+.expand-btn{
+  font-size:11px;color:var(--accent);cursor:pointer;margin-left:auto;
+  flex-shrink:0;white-space:nowrap;border:none;background:none;padding:0;
+}
+.expand-btn:hover{text-decoration:underline;}
+
+/* EMPTY */
+.no-results{
+  grid-column:1/-1;text-align:center;
+  padding:60px 20px;color:var(--text3);font-size:14px;
+}
+
+/* FOOTER */
+.footer{
+  max-width:1200px;margin:0 auto;
+  padding:20px 20px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--border);margin-top:20px;flex-wrap:wrap;gap:10px;
+}
+.footer-text{font-size:11px;color:var(--text3);}
+.footer-link{font-size:11px;color:var(--accent);text-decoration:none;}
+.footer-link:hover{text-decoration:underline;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--text3);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="journal-badge">
+        <div class="journal-dot"></div>
+        <div>
+          <div class="journal-name">Nature Ecology &amp; Evolution</div>
+          <div class="journal-sub">Springer Nature · IF ~16 · 月刊</div>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-chip">收录 <span id="totalCount">20</span> 篇</div>
+        <div class="stat-chip">最新 <span>2026.03</span></div>
+        <div class="stat-chip">数据来源 <span>nature.com</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-wrap">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input id="searchInput" type="text" placeholder="搜索标题、作者、摘要…" oninput="filterCards()">
+    </div>
+    <div class="filter-tags">
+      <button class="tag-btn active" data-topic="all" onclick="setTopic(this,'all')">全部</button>
+      <button class="tag-btn" data-topic="climate" onclick="setTopic(this,'climate')">气候变化</button>
+      <button class="tag-btn" data-topic="evolution" onclick="setTopic(this,'evolution')">进化生物</button>
+      <button class="tag-btn" data-topic="ecology" onclick="setTopic(this,'ecology')">生态系统</button>
+      <button class="tag-btn" data-topic="marine" onclick="setTopic(this,'marine')">海洋</button>
+      <button class="tag-btn" data-topic="microbial" onclick="setTopic(this,'microbial')">微生物</button>
+      <button class="tag-btn" data-topic="biodiversity" onclick="setTopic(this,'biodiversity')">生物多样性</button>
+      <button class="tag-btn" data-topic="paleontology" onclick="setTopic(this,'paleontology')">古生物</button>
+    </div>
+    <span class="result-count" id="resultCount">显示 20 篇</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="grid" id="paperGrid">
+
+    <!-- 1 -->
+    <div class="paper-card" data-topic="ecology" data-idx="1">
+      <div class="card-top">
+        <span class="card-num">#1</span>
+        <div class="card-title">Greater trophic diversity of soil animal communities under agricultural land use and tropical climate</div>
+        <span class="card-date">2026-03-16</span>
+      </div>
+      <div class="card-authors"><span>Zheng Zhou</span>, Nico Eisenhauer, Anton Potapov</div>
+      <div class="card-abstract">Soil fauna is an important but often neglected component of terrestrial food webs. Here the authors use a large dataset of stable isotope observations to analyse how soil animal trophic diversity varies across climates and land-use types and identify potential biotic mechanisms.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-ecology">生态系统</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="paper-card" data-topic="evolution" data-idx="2">
+      <div class="card-top">
+        <span class="card-num">#2</span>
+        <div class="card-title">Parallel but distinct adaptive routes in the budding and fission yeasts after 10,000 generations of experimental evolution</div>
+        <span class="card-date">2026-03-13</span>
+      </div>
+      <div class="card-authors"><span>Arnaud N'Guessan</span>, Vivian Wang, Alex N. Nguyen Ba</div>
+      <div class="card-abstract">Experimental evolution of fission yeast (Schizosaccharomyces pombe) in the same environment as a previous experiment with budding yeast (Saccharomyces cerevisiae) reveals parallel evolution but distinct molecular mechanisms and targets of adaptation in the two species.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-evolution">进化生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="paper-card" data-topic="climate" data-idx="3">
+      <div class="card-top">
+        <span class="card-num">#3</span>
+        <div class="card-title">Widespread ecological responses and cascading effects of the 2021 western North American heatwave</div>
+        <span class="card-date">2026-03-11</span>
+      </div>
+      <div class="card-authors"><span>Julia K. Baum</span>, Margaret A. Slein, Bert William</div>
+      <div class="card-abstract">Baum et al. present a synthesis of field data, remote-sensed data, media reports and process-based modelling analyses examining the effects of the 2021 heatwave in western North America for 32 terrestrial and marine taxa as well as gross primary productivity, streamflow and wildfire activity.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-climate">气候变化</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="paper-card" data-topic="ecology" data-idx="4">
+      <div class="card-top">
+        <span class="card-num">#4</span>
+        <div class="card-title">Storm-induced mass mortality results in both immediate and long-term consequences for a migratory songbird</div>
+        <span class="card-date">2026-03-06</span>
+      </div>
+      <div class="card-authors"><span>Maria Stager</span>, Phred M. Benham, Anna M. Forsman</div>
+      <div class="card-abstract">Combining 27 years of citizen science data with whole-genome sequencing, the authors show that mass mortality of purple martins caused by a severe winter storm in the USA had demographic consequences for surviving populations, including delayed breeding and reproductive failures that are likely to persist for several years.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-ecology">生态系统</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="paper-card" data-topic="marine" data-idx="5">
+      <div class="card-top">
+        <span class="card-num">#5</span>
+        <div class="card-title">Marine protected areas marginally offset anthropogenic declines in tropical reef fish contributions to nature and people</div>
+        <span class="card-date">2026-03-06</span>
+      </div>
+      <div class="card-authors"><span>Ulysse Flandrin</span>, Nicolas Mouquet, David Mouillot</div>
+      <div class="card-abstract">The effectiveness of marine protected areas remains uncertain. Studying 2,800 tropical reefs, the authors of this study show that marine protected areas have compensated for only a small portion of human impacts on fish contributions to people and nature, particularly in terms of biomass and biodiversity.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-marine">海洋</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="paper-card" data-topic="climate" data-idx="6">
+      <div class="card-top">
+        <span class="card-num">#6</span>
+        <div class="card-title">Human pressure and biodiversity modify forest resilience after extreme multi-year droughts</div>
+        <span class="card-date">2026-03-04</span>
+      </div>
+      <div class="card-authors"><span>Tianjing Wu</span>, Yanxu Liu, Arthur Gessler</div>
+      <div class="card-abstract">This study reported widespread declines in resilience after multi-year droughts and showed that biodiversity and climate strongly shape forest resilience after multi-year droughts, but human footprint makes biodiversity's contribution consistently and strongly negative.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-climate">气候变化</span>
+        <span class="topic-tag topic-biodiversity">生物多样性</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="paper-card" data-topic="ecology" data-idx="7">
+      <div class="card-top">
+        <span class="card-num">#7</span>
+        <div class="card-title">Silent reservoir species are shaping the emergence of Usutu virus</div>
+        <span class="card-date">2026-03-03</span>
+      </div>
+      <div class="card-authors"><span>Mariken M. de Wit</span>, Gaël Beaunée, Quirine A. ten Bosch</div>
+      <div class="card-abstract">By collating molecular, serological and population data from multiple wildlife surveillance schemes, this paper demonstrates that host species other than the most-affected and sentinel blackbird species must be involved in the transmission of Usutu virus in the Netherlands.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-ecology">生态系统</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="paper-card" data-topic="evolution" data-idx="8">
+      <div class="card-top">
+        <span class="card-num">#8</span>
+        <div class="card-title">Convergent evolution of hexenal isomerases in Lepidoptera and plants</div>
+        <span class="card-date">2026-02-27</span>
+      </div>
+      <div class="card-authors"><span>Yu-Hsien Lin</span>, Bulah Chia-hsiang Wu, Silke Allmann</div>
+      <div class="card-abstract">Phylogenetic and functional analyses across 34 Lepidoptera and 183 plant species show that hexenal isomerases found in Lepidoptera exhibit functional convergence with those found in plants despite having evolved independently from unrelated enzyme families.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-evolution">进化生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="paper-card" data-topic="evolution" data-idx="9">
+      <div class="card-top">
+        <span class="card-num">#9</span>
+        <div class="card-title">Territoriality modulates the coevolution of cooperative breeding and female song in songbirds</div>
+        <span class="card-date">2026-02-25</span>
+      </div>
+      <div class="card-authors"><span>Kate T. Snyder</span>, Aleyna Loughran-Pierce, Nicole Creanza</div>
+      <div class="card-abstract">Comparative phylogenetic analysis of song features and social behaviours across songbirds shows a coevolutionary relationship between cooperative breeding and presence of female song that is more pronounced in species with weak territoriality.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-evolution">进化生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="paper-card" data-topic="marine" data-idx="10">
+      <div class="card-top">
+        <span class="card-num">#10</span>
+        <div class="card-title">Long-term warming reduces fish biomass, but heatwaves shift it</div>
+        <span class="card-date">2026-02-25</span>
+      </div>
+      <div class="card-authors"><span>Shahar Chaikin</span>, Juan David González-Trujillo, Miguel B. Araújo</div>
+      <div class="card-abstract">A large-scale analysis of changes in fish biomass over 25 years identifies average biomass declines associated with long-term warming, as well as sharp decreases and increases in biomass associated with marine heatwaves at the warm and cold edges of species' ranges, respectively.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-marine">海洋</span>
+        <span class="topic-tag topic-climate">气候变化</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="paper-card" data-topic="evolution" data-idx="11">
+      <div class="card-top">
+        <span class="card-num">#11</span>
+        <div class="card-title">Pace of ecology drives the tempo of visual perception across the animal kingdom</div>
+        <span class="card-date">2026-02-24</span>
+      </div>
+      <div class="card-authors"><span>Clinton S. Haarlem</span>, Cliodhna Hynes, Kevin Healy</div>
+      <div class="card-abstract">Using phylogenetic comparative methods across 237 species from disparate phyla, the authors show that species with fast-paced ecologies have higher temporal resolution of perception.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-evolution">进化生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="paper-card" data-topic="paleontology" data-idx="12">
+      <div class="card-top">
+        <span class="card-num">#12</span>
+        <div class="card-title">Carbon/phosphorus burial ratio reveals a rapid spread of land plants during the Late Ordovician</div>
+        <span class="card-date">2026-02-24</span>
+      </div>
+      <div class="card-authors"><span>Jiachen Cai</span>, Lidya G. Tarhan, Mingyu Zhao</div>
+      <div class="card-abstract">A shift in organic carbon to total phosphorus (Corg/Ptotal) ratios in marine siliciclastic strata from approximately 455 million years ago suggests an earlier-than-previously-thought spread of land plants and their impact on the Earth system.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-paleontology">古生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="paper-card" data-topic="evolution" data-idx="13">
+      <div class="card-top">
+        <span class="card-num">#13</span>
+        <div class="card-title">Comparative analysis of deep mutational scanning datasets in enteroviruses A and B identifies functional divergence and therapeutic targets</div>
+        <span class="card-date">2026-02-23</span>
+      </div>
+      <div class="card-authors"><span>Beatriz Álvarez-Rodríguez</span>, William Bakhache, Patrick T. Dolan</div>
+      <div class="card-abstract">A comparison of proteome-wide mutational scanning datasets from enterovirus A and B species reveals evolutionary constraints shared by these viral species that localize to core functional regions, as well as species- and type-specific constraints that map to distinct host interactions.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-evolution">进化生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="paper-card" data-topic="climate" data-idx="14">
+      <div class="card-top">
+        <span class="card-num">#14</span>
+        <div class="card-title">Increase in plant reliance on past precipitation associated with greening and drying</div>
+        <span class="card-date">2026-02-18</span>
+      </div>
+      <div class="card-authors"><span>Hongying Zhang</span>, Yao Zhang, Michael O'Sullivan</div>
+      <div class="card-abstract">Over the past 40 years, 42% of tropical and subtropical ecosystems have experienced an increase in plant reliance on past precipitation, consistent with greening during the late growing season in drylands and drying during the wet-to-dry period in non-drylands.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-climate">气候变化</span>
+        <span class="topic-tag topic-ecology">生态系统</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="paper-card" data-topic="ecology" data-idx="15">
+      <div class="card-top">
+        <span class="card-num">#15</span>
+        <div class="card-title">Growth form and lifespan of herbaceous species mediate the role of traits in short-term drought response</div>
+        <span class="card-date">2026-02-11</span>
+      </div>
+      <div class="card-authors"><span>Samantha J. Worthy</span>, Justin C. Luong, Jennifer L. Funk</div>
+      <div class="card-abstract">Using 63 globally distributed grassland and shrubland sites from the International Drought Experiment, this study identified plant traits linked to drought resistance after 1 year of extreme drought across growth forms, lifespans and climate.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-ecology">生态系统</span>
+        <span class="topic-tag topic-climate">气候变化</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="paper-card" data-topic="paleontology" data-idx="16">
+      <div class="card-top">
+        <span class="card-num">#16</span>
+        <div class="card-title">The billion-dollar case for sustaining palaeontology's digital databases</div>
+        <span class="card-date">2026-02-10</span>
+      </div>
+      <div class="card-authors"><span>Elizabeth M. Dowding</span>, Emma M. Dunne, Ádám T. Kocsis</div>
+      <div class="card-abstract">The authors survey community palaeontological databases, documenting their contributions to science as well as their vulnerabilities, and provide recommendations for the future of open science databases in palaeontology.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-paleontology">古生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="paper-card" data-topic="paleontology" data-idx="17">
+      <div class="card-top">
+        <span class="card-num">#17</span>
+        <div class="card-title">Carboniferous recumbirostran elucidates the origins of terrestrial herbivory</div>
+        <span class="card-date">2026-02-10</span>
+      </div>
+      <div class="card-authors"><span>Arjan Mann</span>, Zifang Xiong, Hillary C. Maddin</div>
+      <div class="card-abstract">A new species of pantylid microsaur from the Late Carboniferous of Cape Breton Island, Nova Scotia, has teeth with dental occlusion consistent with herbivory, indicating an early transition to this condition among terrestrial tetrapods.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-paleontology">古生物</span>
+        <span class="topic-tag topic-evolution">进化生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="paper-card" data-topic="climate" data-idx="18">
+      <div class="card-top">
+        <span class="card-num">#18</span>
+        <div class="card-title">Warming enhances soil carbon accumulation in boreal Sphagnum peatlands</div>
+        <span class="card-date">2026-02-09</span>
+      </div>
+      <div class="card-authors"><span>Yunpeng Zhao</span>, Xiaojuan Feng, Xuefei Li</div>
+      <div class="card-abstract">Data from long-term experiments in Finnish peatlands shows that warming induces a metabolic response in boreal Sphagnum peatlands that enhances accumulation of soil carbon, in contrast to the carbon losses in response to warming in boreal forests and tundra.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-climate">气候变化</span>
+        <span class="topic-tag topic-microbial">微生物</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 19 -->
+    <div class="paper-card" data-topic="marine" data-idx="19">
+      <div class="card-top">
+        <span class="card-num">#19</span>
+        <div class="card-title">Temperature variation and life history mediate nonlinearity in fluctuations of marine fish populations worldwide</div>
+        <span class="card-date">2026-02-09</span>
+      </div>
+      <div class="card-authors"><span>Robert M. Hechler</span>, Martin Krkosek</div>
+      <div class="card-abstract">A global analysis of marine fish populations involving 243 recruitment and 266 spawner time series across 143 species finds that nonlinear dynamics are widespread and that the degree of nonlinearity is amplified by temperature variation and in fast-lived species.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-marine">海洋</span>
+        <span class="topic-tag topic-climate">气候变化</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <!-- 20 -->
+    <div class="paper-card" data-topic="microbial" data-idx="20">
+      <div class="card-top">
+        <span class="card-num">#20</span>
+        <div class="card-title">Microbial growth rate is a stronger predictor of soil organic carbon than carbon use efficiency</div>
+        <span class="card-date">2026-02-06</span>
+      </div>
+      <div class="card-authors"><span>Xianjin He</span>, Gaëlle Marmasse, Daniel S. Goll</div>
+      <div class="card-abstract">Microbial carbon use efficiency is a strong predictor of soil organic carbon stocks. Here the authors reveal that the microbial growth rate is a more reliable and informative predictor, and that modelling approaches tend to overemphasize the role of biotic over abiotic controls compared to empirical data.</div>
+      <div class="card-footer">
+        <span class="topic-tag topic-microbial">微生物</span>
+        <span class="topic-tag topic-ecology">生态系统</span>
+        <button class="expand-btn" onclick="toggleAbstract(this)">展开</button>
+      </div>
+    </div>
+
+    <div class="no-results" id="noResults" style="display:none;">没有找到匹配的论文</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="footer">
+    <span class="footer-text">数据来源：nature.com/natecolevol · 更新于 2026.03.17 · WorkBuddy 自动整理</span>
+    <a class="footer-link" href="https://www.nature.com/natecolevol/research-articles" target="_blank">访问原刊 →</a>
+  </div>
+</div>
+
+<script>
+var currentTopic = 'all';
+
+function setTopic(btn, topic) {
+  currentTopic = topic;
+  document.querySelectorAll('.tag-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  filterCards();
+}
+
+function filterCards() {
+  var q = document.getElementById('searchInput').value.trim().toLowerCase();
+  var cards = document.querySelectorAll('.paper-card');
+  var shown = 0;
+  cards.forEach(function(card) {
+    var topic = card.getAttribute('data-topic');
+    var topicMatch = currentTopic === 'all' || topic === currentTopic;
+    var text = card.innerText.toLowerCase();
+    var textMatch = !q || text.indexOf(q) !== -1;
+    var visible = topicMatch && textMatch;
+    card.style.display = visible ? '' : 'none';
+    if (visible) shown++;
+  });
+  document.getElementById('resultCount').textContent = '显示 ' + shown + ' 篇';
+  document.getElementById('noResults').style.display = shown === 0 ? '' : 'none';
+}
+
+function toggleAbstract(btn) {
+  var card = btn.closest('.paper-card');
+  var abs = card.querySelector('.card-abstract');
+  if (abs.classList.contains('expanded')) {
+    abs.classList.remove('expanded');
+    btn.textContent = '展开';
+  } else {
+    abs.classList.add('expanded');
+    btn.textContent = '收起';
+  }
+}
+</script>
+</body>
+</html>

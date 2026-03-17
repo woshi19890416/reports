@@ -218,12 +218,24 @@
       <div class="hd-title">报告中心</div>
       <div class="hd-date" id="update-time"></div>
     </div>
-    <div class="hd-count" id="report-count">3 份报告</div>
+    <div class="hd-count" id="report-count">4 份报告</div>
   </div>
 </div>
 
 <!-- 研究报告 -->
 <div class="sec-label">研究报告</div>
+
+<a class="card" href="natecolevol_papers.html">
+  <div class="card-icon icon-research">🌿</div>
+  <div class="card-info">
+    <div class="card-title">Nature Ecology &amp; Evolution 论文数据库<span class="card-badge">NEW</span></div>
+    <div class="card-meta">Nature Eco&amp;Evo · 20篇 · 2026.02–03 · 2026.03</div>
+  </div>
+  <div class="card-right">
+    <button class="btn-short" onclick="shortLink(event,'natecolevol_papers.html',this)">短链</button>
+    <span class="card-arrow">›</span>
+  </div>
+</a>
 
 <a class="card" href="natcities_papers.html">
   <div class="card-icon icon-research">🏙️</div>
@@ -283,6 +295,7 @@
 
   // 自建短链映射：filename → go/N.html
   var shortMap = {
+    'natecolevol_papers.html': '4',
     'natcities_papers.html': '3',
     'urban_biodiversity_infographic.html': '1',
     'soil_ghg_report.html': '2'
