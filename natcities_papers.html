@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Nature Cities · 论文数据库 · 173篇</title>
+<title>Nature Cities · 论文数据库 · 174篇</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -14,7 +14,6 @@
 }
 html{background:var(--bg);}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
-/* HEADER */
 .header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 20px;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
 .header-inner{max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .journal-badge{display:inline-flex;align-items:center;gap:10px;background:#1c2128;border:1px solid var(--border);border-radius:8px;padding:8px 14px;}
@@ -24,7 +23,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Ar
 .header-stats{display:flex;gap:8px;flex-wrap:wrap;}
 .stat-chip{font-size:12px;font-weight:500;color:var(--text2);background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;}
 .stat-chip b{color:var(--accent);}
-/* TOOLBAR */
 .toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;position:sticky;top:61px;z-index:99;}
 .toolbar-inner{max-width:1440px;margin:0 auto;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
 .search-wrap{flex:1;min-width:220px;position:relative;}
@@ -38,7 +36,6 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
 .tag-btn:hover,.tag-btn.active{background:var(--accent2);border-color:var(--accent);color:#fff;}
 .tag-count{font-size:10px;opacity:.75;}
 .result-count{font-size:12px;color:var(--text3);margin-left:auto;white-space:nowrap;}
-/* LAYOUT */
 .layout{max-width:1440px;margin:0 auto;padding:20px;display:flex;gap:20px;align-items:flex-start;}
 .sidebar{width:210px;flex-shrink:0;position:sticky;top:130px;}
 .sidebar-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px;}
@@ -46,11 +43,9 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
 .bar-item{margin-bottom:7px;}
 .bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:3px;}
 .bar-track{background:var(--surface2);border-radius:2px;height:4px;overflow:hidden;}
-.bar-fill{background:var(--accent2);border-radius:2px;height:100%;transition:width .4s;}
+.bar-fill{background:var(--accent2);border-radius:2px;height:100%;}
 .grid-wrap{flex:1;min-width:0;}
-/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;}
-/* CARD */
 .paper-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:9px;transition:border-color .2s,box-shadow .2s;}
 .paper-card:hover{border-color:var(--accent2);box-shadow:0 4px 20px rgba(31,111,235,.1);}
 .card-header{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
@@ -81,7 +76,6 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
 .doi-link{font-size:11px;color:var(--text3);text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:3px 9px;transition:all .15s;}
 .doi-link:hover{border-color:var(--text2);background:var(--surface2);color:var(--text2);}
 .no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text3);font-size:14px;}
-/* FOOTER */
 .page-footer{max-width:1440px;margin:30px auto 0;padding:16px 20px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px;}
 .footer-text{font-size:11px;color:var(--text3);}
 .footer-link{font-size:11px;color:var(--accent);text-decoration:none;}
@@ -98,7 +92,6 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-inner">
     <div class="journal-badge">
@@ -109,13 +102,12 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
       </div>
     </div>
     <div class="header-stats">
-      <div class="stat-chip">收录 <b>173</b> 篇</div>
+      <div class="stat-chip">收录 <b>174</b> 篇</div>
       <div class="stat-chip">年份跨度 <b>2023–2026</b></div>
-      <div class="stat-chip">更新 <b>2026.03</b></div>
+      <div class="stat-chip">更新 <b>2026.03.19</b></div>
     </div>
   </div>
 </div>
-
 <div class="toolbar">
   <div class="toolbar-inner">
     <div class="search-wrap">
@@ -128,8 +120,8 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
       <option value="date_asc">最早优先</option>
     </select>
     <div class="filter-tags">
-      <button class="tag-btn active" data-topic="all" onclick="setTopic(this,'all')">全部 <span class="tag-count">173</span></button>
-      <button class="tag-btn" data-topic="climate" onclick="setTopic(this,'climate')">气候变化 <span class="tag-count">76</span></button>
+      <button class="tag-btn active" data-topic="all" onclick="setTopic(this,'all')">全部 <span class="tag-count">174</span></button>
+      <button class="tag-btn" data-topic="climate" onclick="setTopic(this,'climate')">气候变化 <span class="tag-count">77</span></button>
       <button class="tag-btn" data-topic="evolution" onclick="setTopic(this,'evolution')">进化生物 <span class="tag-count">13</span></button>
       <button class="tag-btn" data-topic="marine" onclick="setTopic(this,'marine')">海洋 <span class="tag-count">2</span></button>
       <button class="tag-btn" data-topic="microbial" onclick="setTopic(this,'microbial')">微生物 <span class="tag-count">3</span></button>
@@ -137,15 +129,14 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
       <button class="tag-btn" data-topic="urban" onclick="setTopic(this,'urban')">城市 <span class="tag-count">71</span></button>
       <button class="tag-btn" data-topic="ecology" onclick="setTopic(this,'ecology')">生态系统 <span class="tag-count">2</span></button>
     </div>
-    <span class="result-count" id="resultCount">显示 173 篇</span>
+    <span class="result-count" id="resultCount">显示 174 篇</span>
   </div>
 </div>
-
 <div class="layout">
   <div class="sidebar">
     <div class="sidebar-card">
       <h3>年份分布</h3>
-      <div class="bar-item"><div class="bar-label"><span>2026</span><span>26</span></div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div></div>
+      <div class="bar-item"><div class="bar-label"><span>2026</span><span>27</span></div><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div></div>
 <div class="bar-item"><div class="bar-label"><span>2025</span><span>78</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
 <div class="bar-item"><div class="bar-label"><span>2024</span><span>68</span></div><div class="bar-track"><div class="bar-fill" style="width:87%"></div></div></div>
 <div class="bar-item"><div class="bar-label"><span>2023</span><span>1</span></div><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div></div>
@@ -3271,16 +3262,32 @@ select{background:var(--surface2);border:1px solid var(--border);border-radius:6
         <a class="doi-link" href="https://doi.org/10.1038/s44284-023-00001-9" target="_blank" rel="noopener">DOI</a>
       </div>
     </div>
+    <div class="paper-card" data-topic="climate" data-date="2026-03-18" data-year="2026" data-idx="174">
+      <div class="card-header">
+        <span class="card-num">#174</span>
+        <span class="card-date">2026-03-18</span>
+        <span class="type-badge">Article</span>
+        <span class="topic-tag topic-climate">气候变化</span>
+      </div>
+      <div class="card-title">Infrastructure for regional food systems to feed cities at a time of deglobalization</div>
+      <div class="card-authors"><span class="first-author">Sarah Elton</span>; Donald Cole; Krishna Bahadur KC; Evan Fraser</div>
+      <div class="card-abstract-wrap">
+        <div class="card-abstract" id="abs174">A retrenchment of globalization has called into question tariff-free trade at a time when global exchange in food has never been higher. These politics undermine assumptions of uninterrupted global produce flows and raise the question of how to supply cities with produce if trade is restricted, including by climate change. Canada’s largest wholesale food market, the Ontario Food Terminal, is an example of regional food system infrastructure for fresh produce that operates at scale. Here we find that this infrastructure, along with regional agricultural land, connects farmers to consumers and supports food security. Our evidence-based analysis highlights the policy imperative to protect regional foodsheds for cities and offers planners an example of scaled-up regional food system infrastructure that has functioned for decades. Deglobalization threatens urban food security. Regional food system infrastructure, exemplified by the Ontario Food Terminal, combined with protected farmland, can reliably supply cities with fresh produce at scale.</div>
+        <button class="expand-btn" onclick="toggleAbs(174)">展开摘要 ▾</button>
+      </div>
+      <div class="card-footer">
+        <a class="paper-link" href="https://www.nature.com/articles/s44284-026-00413-3" target="_blank" rel="noopener">原文 ↗</a>
+        <a class="doi-link" href="https://doi.org/10.1038/s44284-026-00413-3" target="_blank" rel="noopener">DOI</a>
+      </div>
+    </div>
       <div class="no-results" id="noResults" style="display:none;">没有找到匹配的论文</div>
     </div>
   </div>
 </div>
-
 <div class="page-footer">
-  <span class="footer-text">数据来源：https://www.nature.com/natcities/research-articles · 共 173 篇 · 更新于 2026.03.17 · WorkBuddy 整理</span>
+  <span class="footer-text">数据来源：https://www.nature.com/natcities/research-articles · 共 174 篇 · 更新于 2026.03.19 · WorkBuddy 整理</span>
   <a class="footer-link" href="https://www.nature.com/natcities/research-articles" target="_blank" rel="noopener">访问原刊 →</a>
 </div>
-
 <script>
 var currentTopic='all';
 function setTopic(btn,topic){
