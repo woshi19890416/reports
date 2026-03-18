@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恒生科技指数 · 2026.03.18</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --red: #f85149;
+    --green: #3fb950;
+    --blue: #58a6ff;
+    --yellow: #d29922;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+  }
+  html { background: var(--bg); color: var(--text); font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  body { max-width: 800px; margin: 0 auto; padding: 24px 16px 60px; }
+  .header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 28px; }
+  .header-badge { display: inline-flex; align-items: center; gap: 6px; background: #1a2a1a; border: 1px solid #3fb95044; color: var(--green); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .header-badge::before { content: ""; width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+  .header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .header-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--text2); }
+  .header-meta strong { color: var(--text); }
+  .verdict { background: linear-gradient(135deg, #1a1a2a 0%, #161b22 100%); border: 1px solid #58a6ff33; border-radius: 12px; padding: 18px 22px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+  .verdict-label { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .verdict-value { font-size: 26px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
+  .verdict-sub { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .verdict-right { text-align: right; }
+  .verdict-tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 6px; background: #1a1a2a; color: var(--blue); border: 1px solid #58a6ff55; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 500px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .card-label { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .card-value { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+  .card-change { font-size: 12px; margin-top: 4px; }
+  .up { color: var(--red); }
+  .down { color: var(--green); }
+  .neu { color: var(--text2); }
+  .section { margin-bottom: 24px; }
+  .section-title { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .tbl th { text-align: left; font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .tbl td { padding: 8px 10px; border-bottom: 1px solid #21262d; color: var(--text); }
+  .tbl tr:last-child td { border-bottom: none; }
+  .signal { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+  .signal-up { background: #1a3a1a; color: var(--green); }
+  .signal-down { background: #3a1a1a; color: var(--red); }
+  .signal-neu { background: #1a1a2a; color: var(--blue); }
+  .hot-tag { display: inline-block; font-size: 10px; padding: 3px 8px; border-radius: 4px; background: #2a1a3a; color: var(--purple); margin: 2px; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text2); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">实时行情</div>
+  <h1>恒生科技指数</h1>
+  <div class="header-meta">
+    <div>标的：<strong>HSTECH</strong></div>
+    <div>日期：<strong>2026.03.18</strong></div>
+  </div>
+</div>
+
+<div class="verdict">
+  <div>
+    <div class="verdict-label">今日收盘</div>
+    <div class="verdict-value">5,108.30</div>
+    <div class="verdict-sub">恒生指数 +0.61% 站上26000</div>
+  </div>
+  <div class="verdict-right">
+    <div class="verdict-tag">震荡整理</div>
+    <div class="card-change neu">成交 2403亿</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">核心行情</div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-label">今日涨跌幅</div>
+      <div class="card-value neu">+0.01%</div>
+      <div class="card-change neu">基本持平</div>
+    </div>
+    <div class="card">
+      <div class="card-label">近10日</div>
+      <div class="card-value up">+6.5%</div>
+      <div class="card-change up">3月6日+3.15%</div>
+    </div>
+    <div class="card">
+      <div class="card-label">52周区间</div>
+      <div class="card-value">4296-6715</div>
+      <div class="card-change neu">当前距高点-23.9%</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">近期走势</div>
+  <table class="tbl">
+    <thead><tr><th>日期</th><th>收盘</th><th>涨跌幅</th><th>走势</th></tr></thead>
+    <tbody>
+      <tr><td>03-18</td><td>5,108.30</td><td class="up">+0.01%</td><td><span class="signal signal-neu">震荡</span></td></tr>
+      <tr><td>03-17</td><td>5,107.64</td><td class="down">-0.08%</td><td><span class="signal signal-down">小幅回调</span></td></tr>
+      <tr><td>03-16</td><td>5,111.78</td><td class="up">+2.69%</td><td><span class="signal signal-up">大阳线</span></td></tr>
+      <tr><td>03-13</td><td>4,978.08</td><td class="down">-0.99%</td><td><span class="signal signal-down">回调</span></td></tr>
+      <tr><td>03-10</td><td>5,060.53</td><td class="up">+2.40%</td><td><span class="signal signal-up">反弹</span></td></tr>
+      <tr><td>03-06</td><td>4,947.50</td><td class="up">+3.15%</td><td><span class="signal signal-up">大阳线</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">热点板块</div>
+  <div style="margin-bottom: 12px;">
+    <span class="hot-tag">AI应用 +19%</span>
+    <span class="hot-tag">半导体 +13%</span>
+    <span class="hot-tag">电力设备 +12%</span>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>股票</th><th>涨跌幅</th><th>板块</th></tr></thead>
+    <tbody>
+      <tr><td>Minimax</td><td class="up">+19%</td><td>AI应用</td></tr>
+      <tr><td>天数智芯</td><td class="up">+13%</td><td>半导体</td></tr>
+      <tr><td>东北电气</td><td class="up">+12%</td><td>电力设备</td></tr>
+      <tr><td>阿里巴巴</td><td class="up">+2%</td><td>科网股</td></tr>
+      <tr><td>百度</td><td class="up">+2%</td><td>科网股</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">技术面分析</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-label">均线位置</div>
+      <div class="card-value" style="font-size: 14px;">5日均线附近争夺</div>
+      <div class="card-change neu">5100±50 震荡区间</div>
+    </div>
+    <div class="card">
+      <div class="card-label">趋势判断</div>
+      <div class="card-value" style="font-size: 14px;">底部反弹后震荡</div>
+      <div class="card-change neu">3月来累计+6.5%</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">小结</div>
+  <div class="card">
+    <p style="font-size: 13px; line-height: 1.7; color: var(--text2);">
+      恒生科技指数今日微涨+0.01%，收于5,108.30点，整体呈现震荡整理态势。近期走势显示3月6日以来累计反弹约6.5%，但距52周高点仍有约24%空间。<br><br>
+      <strong>热点方向：</strong>AI应用股持续活跃（Minimax+19%），半导体和电力设备受算力需求推动表现强势。科网股（阿里、百度）温和上涨。<br><br>
+      <strong>展望：</strong>指数在5100点附近震荡整固，等待更多催化剂（如腾讯今晚业绩）。中期趋势仍偏弱，建议关注AI算力链和业绩确定性标的。
+    </p>
+  </div>
+</div>
+
+<div class="footer">
+  数据来源：新浪财经、英为财情 | 生成时间 2026-03-18
+</div>
+
+</body>
+</html>
