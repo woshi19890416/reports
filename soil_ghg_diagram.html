@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>土壤温室气体排放机制</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .header {
+      background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+      padding: 24px 20px;
+      color: white;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .header p {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    .section {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #43a047;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 16px;
+      background: #43a047;
+      border-radius: 2px;
+    }
+    .gas-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      transition: transform 0.2s;
+    }
+    .gas-card:hover {
+      transform: translateX(4px);
+    }
+    .gas-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+    .gas-co2 { background: linear-gradient(135deg, #78909c, #546e7a); }
+    .gas-ch4 { background: linear-gradient(135deg, #ff7043, #e64a19); }
+    .gas-n2o { background: linear-gradient(135deg, #ab47bc, #7b1fa2); }
+    .gas-info { flex: 1; }
+    .gas-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+    .gas-formula {
+      font-size: 12px;
+      color: #666;
+    }
+    .process-box {
+      background: #f5f9f5;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 8px;
+    }
+    .process-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #555;
+    }
+    .step-num {
+      width: 20px;
+      height: 20px;
+      background: #43a047;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .factors {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .factor {
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+    .factor-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    .factor-label {
+      font-size: 11px;
+      color: #e65100;
+      font-weight: 500;
+    }
+    .flow-diagram {
+      background: #f0f7f0;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 8px;
+    }
+    .flow-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      position: relative;
+    }
+    .flow-row:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 8px;
+      background: #c5e1a5;
+    }
+    .flow-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #333;
+    }
+    .flow-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .arrow {
+      color: #43a047;
+      font-size: 18px;
+    }
+    .ref-section {
+      background: #fafafa;
+      padding: 16px 20px;
+    }
+    .ref-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .ref-item {
+      font-size: 10px;
+      color: #888;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .footer {
+      background: #2e7d32;
+      color: white;
+      padding: 14px;
+      text-align: center;
+      font-size: 11px;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .gas-icon { animation: float 3s ease-in-out infinite; }
+    .gas-co2 { animation-delay: 0s; }
+    .gas-ch4 { animation-delay: 0.5s; }
+    .gas-n2o { animation-delay: 1s; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌱 土壤温室气体排放机制</h1>
+      <p>Soil Greenhouse Gas Emissions</p>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">主要气体类型</div>
+      
+      <div class="gas-card">
+        <div class="gas-icon gas-co2">CO₂</div>
+        <div class="gas-info">
+          <div class="gas-name">二氧化碳</div>
+          <div class="gas-formula">Carbon Dioxide · 土壤呼吸</div>
+        </div>
+      </div>
+      
+      <div class="gas-card">
+        <div class="gas-icon gas-ch4">CH₄</div>
+        <div class="gas-info">
+          <div class="gas-name">甲烷</div>
+          <div class="gas-formula">Methane · 产甲烷作用</div>
+        </div>
+      </div>
+      
+      <div class="gas-card">
+        <div class="gas-icon gas-n2o">N₂O</div>
+        <div class="gas-info">
+          <div class="gas-name">氧化亚氮</div>
+          <div class="gas-formula">Nitrous Oxide · 硝化/反硝化</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">排放过程</div>
+      
+      <div class="process-box">
+        <div class="process-title">🌿 有机物分解 → CO₂</div>
+        <div class="process-steps">
+          <div class="step"><span class="step-num">1</span> 植物残体/凋落物进入土壤</div>
+          <div class="step"><span class="step-num">2</span> 异养微生物分解有机物</div>
+          <div class="step"><span class="step-num">3</span> 释放CO₂到大气</div>
+        </div>
+      </div>
+      
+      <div class="process-box">
+        <div class="process-title">💧 厌氧环境 → CH₄</div>
+        <div class="process-steps">
+          <div class="step"><span class="step-num">1</span> 水分饱和形成厌氧环境</div>
+          <div class="step"><span class="step-num">2</span> 产甲烷菌利用底物</div>
+          <div class="step"><span class="step-num">3</span> 产生CH₄（湿地、稻田）</div>
+        </div>
+      </div>
+      
+      <div class="process-box">
+        <div class="process-title">🧪 氮循环 → N₂O</div>
+        <div class="process-steps">
+          <div class="step"><span class="step-num">1</span> 施用氮肥或有机氮</div>
+          <div class="step"><span class="step-num">2</span> 硝化细菌将NH₃→NO₃⁻</div>
+          <div class="step"><span class="step-num">3</span> 反硝化细菌将NO₃⁻→N₂O</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">影响因素</div>
+      <div class="factors">
+        <div class="factor">
+          <div class="factor-icon">🌡️</div>
+          <div class="factor-label">温度</div>
+        </div>
+        <div class="factor">
+          <div class="factor-icon">💧</div>
+          <div class="factor-label">土壤水分</div>
+        </div>
+        <div class="factor">
+          <div class="factor-icon">🧱</div>
+          <div class="factor-label">有机质</div>
+        </div>
+        <div class="factor">
+          <div class="factor-icon">⚡</div>
+          <div class="factor-label">氮肥施用</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">排放通量示意</div>
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#c8e6c9;">🌱</div>
+            <span>植物残体</span>
+          </div>
+          <span class="arrow">→</span>
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#ffe0b2;">🦠</div>
+            <span>微生物</span>
+          </div>
+          <span class="arrow">→</span>
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#ffcdd2;">💨</div>
+            <span>CO₂</span>
+          </div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#b3e5fc;">💧</div>
+            <span>积水/厌氧</span>
+          </div>
+          <span class="arrow">→</span>
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#ffccbc;">🔬</div>
+            <span>产甲烷菌</span>
+          </div>
+          <span class="arrow">→</span>
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#ffcdd2;">💨</div>
+            <span>CH₄</span>
+          </div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#e1bee7;">🧪</div>
+            <span>氮肥/有机氮</span>
+          </div>
+          <span class="arrow">→</span>
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#d1c4e9;">🔄</div>
+            <span>硝化-反硝化</span>
+          </div>
+          <span class="arrow">→</span>
+          <div class="flow-item">
+            <div class="flow-icon" style="background:#ffcdd2;">💨</div>
+            <span>N₂O</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ref-section">
+      <div class="ref-title">📚 参考文献</div>
+      <div class="ref-item">1. Soil is a major contributor to global greenhouse gas emissions (Copernicus Publications, 2024)</div>
+      <div class="ref-item">2. Invasive C4 plants cause greater soil greenhouse gas emissions (Nature Communications Earth & Environment, 2025)</div>
+      <div class="ref-item">3. Effects of Nitrogen Fertilization on Soil CH₄, CO₂, and N₂O Emissions in Agricultural Peatlands (ResearchGate, 2025)</div>
+      <div class="ref-item">4. Greenhouse gas dynamics in Northeast China's black soil paddies (ResearchGate, 2026)</div>
+    </div>
+    
+    <div class="footer">
+      Created with BioRender Style · 手机竖版优化
+    </div>
+  </div>
+</body>
+</html>
