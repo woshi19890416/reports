@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Roadmap · Urban Soil Nematology</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset & Base ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --nature-red:    #c0392b;
+  --nature-dark:   #1a1a1a;
+  --nature-mid:    #4a4a4a;
+  --nature-light:  #767676;
+  --nature-line:   #d4d4d4;
+  --nature-bg:     #fafaf8;
+  --nature-white:  #ffffff;
+  --accent-blue:   #1565c0;
+  --accent-green:  #1b5e20;
+  --accent-amber:  #e65100;
+  --panel-a:       #1b5e20;
+  --panel-b:       #1565c0;
+  --code-bg:       #f5f5f0;
+  --tag-bg:        #f0f0ed;
+}
+
+body {
+  font-family: 'Source Sans 3', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--nature-bg);
+  color: var(--nature-dark);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* ─── Journal Header ─── */
+.journal-header {
+  background: var(--nature-white);
+  border-bottom: 3px solid var(--nature-red);
+  padding: 0;
+}
+.journal-top-bar {
+  background: var(--nature-red);
+  color: white;
+  padding: 5px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.journal-name {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--nature-red);
+  letter-spacing: -0.5px;
+  padding: 12px 24px 4px;
+}
+.journal-tagline {
+  font-size: 11px;
+  color: var(--nature-light);
+  padding: 0 24px 10px;
+  font-style: italic;
+  border-bottom: 1px solid var(--nature-line);
+  margin-bottom: 0;
+}
+
+/* ─── Article Header ─── */
+.article-header {
+  background: var(--nature-white);
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--nature-line);
+}
+.article-section {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--nature-red);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.article-title {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--nature-dark);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.article-authors {
+  font-size: 12px;
+  color: var(--accent-blue);
+  margin-bottom: 6px;
+}
+.article-meta {
+  font-size: 11px;
+  color: var(--nature-light);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.article-abstract {
+  font-size: 12.5px;
+  color: var(--nature-mid);
+  line-height: 1.7;
+  border-left: 3px solid var(--nature-red);
+  padding: 8px 12px;
+  background: #fef9f9;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+}
+
+/* ─── Tab Navigation ─── */
+.tab-bar {
+  display: flex;
+  background: var(--nature-white);
+  border-bottom: 2px solid var(--nature-line);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.tab-btn {
+  flex: 1;
+  padding: 11px 12px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--nature-light);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.tab-btn:hover { color: var(--nature-dark); background: var(--tag-bg); }
+.tab-btn.active-a { color: var(--panel-a); border-bottom-color: var(--panel-a); }
+.tab-btn.active-b { color: var(--panel-b); border-bottom-color: var(--panel-b); }
+
+/* ─── Panel ─── */
+.panel { display: none; padding: 20px 16px 32px; max-width: 800px; margin: 0 auto; }
+.panel.active { display: block; }
+
+/* ─── Research Question Box ─── */
+.rq-box {
+  background: var(--nature-white);
+  border: 1px solid var(--nature-line);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border-top: 3px solid var(--panel-a);
+}
+.rq-box.blue { border-top-color: var(--panel-b); }
+.rq-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nature-light);
+  margin-bottom: 6px;
+}
+.rq-text {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--nature-dark);
+  line-height: 1.6;
+}
+
+/* ─── Logic Framework ─── */
+.logic-frame {
+  background: var(--nature-white);
+  border: 1px solid var(--nature-line);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+.logic-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nature-light);
+  margin-bottom: 12px;
+}
+.logic-chain {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.logic-node {
+  flex: 1;
+  min-width: 90px;
+  border-radius: 3px;
+  padding: 8px 10px;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  position: relative;
+}
+.logic-node::after {
+  content: '→';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--nature-light);
+  font-size: 14px;
+  z-index: 1;
+}
+.logic-node:last-child::after { display: none; }
+.lnode-amber  { background: #fff3e0; color: var(--accent-amber); border: 1px solid #ffcc02; }
+.lnode-green  { background: #e8f5e9; color: var(--accent-green); border: 1px solid #81c784; }
+.lnode-blue   { background: #e3f2fd; color: var(--accent-blue);  border: 1px solid #64b5f6; }
+.lnode-gray   { background: var(--tag-bg); color: var(--nature-mid); border: 1px solid var(--nature-line); }
+.logic-sub {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--nature-line);
+}
+.logic-method {
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--nature-light);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ─── Section Divider ─── */
+.sec-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 12px;
+}
+.sec-divider-line { flex: 1; height: 1px; background: var(--nature-line); }
+.sec-divider-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nature-light);
+  white-space: nowrap;
+}
+
+/* ─── Step Cards ─── */
+.step-card {
+  background: var(--nature-white);
+  border: 1px solid var(--nature-line);
+  border-radius: 4px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  border-bottom: 1px solid var(--nature-line);
+}
+.step-num {
+  width: 44px;
+  min-width: 44px;
+  background: var(--panel-a);
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 0;
+  flex-shrink: 0;
+}
+.step-num.blue-bg { background: var(--panel-b); }
+.step-head-right { padding: 10px 14px; flex: 1; }
+.step-title {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nature-dark);
+  margin-bottom: 2px;
+}
+.step-purpose {
+  font-size: 11px;
+  color: var(--nature-light);
+  font-style: italic;
+}
+.step-body {
+  padding: 12px 14px 14px;
+  font-size: 12.5px;
+  color: var(--nature-mid);
+  line-height: 1.7;
+}
+
+/* ─── Connector ─── */
+.step-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 32px;
+  position: relative;
+}
+.step-connector::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--nature-line);
+}
+.connector-arrow {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid var(--nature-line);
+  z-index: 1;
+}
+
+/* ─── Hypothesis Box ─── */
+.hyp-box {
+  background: #f5faf5;
+  border: 1px solid #c8e6c9;
+  border-left: 3px solid var(--panel-a);
+  border-radius: 0 4px 4px 0;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--nature-dark);
+  line-height: 1.75;
+  margin: 8px 0;
+}
+.hyp-box.blue {
+  background: #f0f7ff;
+  border: 1px solid #bbdefb;
+  border-left: 3px solid var(--panel-b);
+}
+.hyp-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--panel-a);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hyp-label.blue { color: var(--panel-b); }
+.hyp-row { display: flex; gap: 6px; margin-bottom: 5px; align-items: flex-start; }
+.hyp-tag {
+  display: inline-block;
+  background: var(--panel-a);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.hyp-tag.blue { background: var(--panel-b); }
+
+/* ─── Reference Quote ─── */
+.ref-quote {
+  background: var(--tag-bg);
+  border-left: 2px solid var(--nature-light);
+  padding: 7px 10px;
+  font-size: 11px;
+  color: var(--nature-light);
+  font-style: italic;
+  border-radius: 0 3px 3px 0;
+  margin: 8px 0;
+  line-height: 1.6;
+}
+.ref-quote b { color: var(--nature-dark); font-style: normal; font-weight: 600; }
+
+/* ─── Data Table ─── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+  margin: 8px 0;
+}
+.data-table caption {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--nature-light);
+  text-align: left;
+  margin-bottom: 4px;
+  caption-side: top;
+  padding-bottom: 4px;
+  font-style: italic;
+}
+.data-table th {
+  background: var(--code-bg);
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--nature-dark);
+  border-top: 2px solid var(--nature-dark);
+  border-bottom: 1px solid var(--nature-dark);
+}
+.data-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--nature-line);
+  color: var(--nature-mid);
+  vertical-align: top;
+}
+.data-table tr:last-child td {
+  border-bottom: 2px solid var(--nature-dark);
+}
+.data-table td.num { text-align: right; font-family: 'Source Code Pro', monospace; }
+.table-note {
+  font-size: 10px;
+  color: var(--nature-light);
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* ─── Method Box ─── */
+.method-box {
+  background: var(--code-bg);
+  border: 1px solid var(--nature-line);
+  border-radius: 3px;
+  padding: 10px 12px;
+  font-size: 11.5px;
+  color: var(--nature-mid);
+  line-height: 1.7;
+  margin: 8px 0;
+}
+.method-box .method-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--nature-dark);
+  margin-bottom: 6px;
+}
+.method-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 4px; }
+.method-key {
+  font-weight: 700;
+  color: var(--nature-dark);
+  min-width: 100px;
+  flex-shrink: 0;
+  font-size: 11.5px;
+}
+.method-val { color: var(--nature-mid); }
+
+/* ─── SEM Path ─── */
+.sem-path {
+  background: var(--nature-white);
+  border: 1px solid var(--nature-line);
+  border-radius: 3px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-family: 'Source Code Pro', monospace;
+  color: var(--nature-dark);
+  line-height: 1.9;
+  margin: 8px 0;
+}
+.sem-path .path-label {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--nature-light);
+  margin-bottom: 6px;
+}
+.sem-arrow { color: var(--panel-a); font-weight: 700; }
+.sem-arrow.blue { color: var(--panel-b); }
+.path-coef { color: var(--accent-amber); font-size: 10.5px; }
+
+/* ─── Evidence Ladder ─── */
+.evidence-ladder { margin: 8px 0; }
+.ev-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.ev-level {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.ev-label { font-size: 11.5px; color: var(--nature-mid); width: 120px; flex-shrink: 0; }
+.ev-bar-wrap { flex: 1; height: 6px; background: var(--nature-line); border-radius: 3px; overflow: hidden; }
+.ev-bar { height: 100%; border-radius: 3px; }
+.ev-strength { font-size: 10.5px; color: var(--nature-light); width: 32px; text-align: right; font-style: italic; }
+.ev-desc { font-size: 10.5px; color: var(--nature-light); flex: 1; }
+
+/* ─── Output Box ─── */
+.output-card {
+  background: var(--nature-dark);
+  color: white;
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.output-card .out-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+.output-card .out-item { display: flex; gap: 6px; margin-bottom: 4px; }
+.output-card .out-bullet { color: #fbbf24; flex-shrink: 0; }
+.output-card .journal-target {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 11px;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* ─── Inline tags ─── */
+.tag {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: var(--nature-mid);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  border: 1px solid var(--nature-line);
+  margin: 1px 2px;
+  white-space: nowrap;
+}
+.tag.green { background: #e8f5e9; color: var(--accent-green); border-color: #c8e6c9; }
+.tag.blue  { background: #e3f2fd; color: var(--accent-blue);  border-color: #bbdefb; }
+.tag.red   { background: #fce4ec; color: var(--nature-red);   border-color: #f48fb1; }
+
+/* ─── Isotope chain box ─── */
+.iso-chain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11.5px;
+  color: var(--nature-dark);
+  padding: 10px 12px;
+  background: var(--code-bg);
+  border: 1px solid var(--nature-line);
+  border-radius: 3px;
+  margin: 8px 0;
+  line-height: 1.9;
+}
+.iso-indent { padding-left: 24px; color: var(--nature-mid); }
+.iso-arrow { color: var(--panel-b); font-weight: 700; }
+.iso-measure { color: var(--accent-amber); }
+
+/* ─── Figure caption style ─── */
+.fig-caption {
+  font-size: 10.5px;
+  color: var(--nature-light);
+  margin-top: 6px;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* ─── Sub-list ─── */
+.body-list { list-style: none; margin: 6px 0; }
+.body-list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 5px;
+  font-size: 12.5px;
+  color: var(--nature-mid);
+  line-height: 1.65;
+}
+.body-list li::before {
+  content: '▸';
+  color: var(--panel-a);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 10px;
+}
+.body-list.blue li::before { color: var(--panel-b); }
+
+/* ─── Responsive ─── */
+@media (max-width: 480px) {
+  .panel { padding: 16px 12px 28px; }
+  .article-header { padding: 16px; }
+  .logic-chain { flex-wrap: wrap; }
+  .logic-node::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Journal Header ─── -->
+<div class="journal-header">
+  <div class="journal-top-bar">
+    <span>RESEARCH ROADMAP</span>
+    <span>Received 24 March 2026</span>
+  </div>
+  <div class="journal-name">Nature · Research Roadmap</div>
+  <div class="journal-tagline">Urban Soil Ecology · Nematode-mediated Ecosystem Functioning</div>
+</div>
+
+<!-- ─── Article Header ─── -->
+<div class="article-header">
+  <div class="article-section">Original Research Protocol</div>
+  <div class="article-title">Quantifying and unravelling nematode-mediated ecosystem services in urban soils along management intensity gradients</div>
+  <div class="article-authors">城市土壤线虫研究团队</div>
+  <div class="article-meta">
+    <span>发布日期：2026-03-24</span>
+    <span>研究周期：24–36 个月</span>
+    <span>核心问题：2 个</span>
+    <span>目标期刊：<i>Ecology / Global Change Biology / J Appl Ecol</i></span>
+  </div>
+  <div class="article-abstract">
+    城市化深刻改变土壤生物多样性与生态系统功能，但线虫功能群在城市管理强度梯度下的响应规律及其对碳氮循环的定量贡献仍不清晰。本研究路线图围绕两个核心问题展开：<b>问题 A</b> 建立城市管理强度—线虫功能群—生态系统服务的定量预测关系；<b>问题 B</b> 揭示捕食性/杂食性线虫丧失通过微生物群落变化影响碳氮循环的因果机制。综合运用野外调查、结构方程模型（SEM）、微宇宙（microcosm）实验及 ¹³C 稳定同位素追踪，为城市绿地管理提供科学依据。
+  </div>
+</div>
+
+<!-- ─── Tab Bar ─── -->
+<div class="tab-bar">
+  <div class="tab-btn active-a" id="tab-a" onclick="switchTab('a')">Question A · 定量关系</div>
+  <div class="tab-btn" id="tab-b" onclick="switchTab('b')">Question B · 因果机制</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     PANEL A
+══════════════════════════════════════════ -->
+<div class="panel active" id="panel-a">
+
+  <!-- Research Question -->
+  <div class="rq-box">
+    <div class="rq-label">Research Question A</div>
+    <div class="rq-text">城市绿地管理强度如何定量影响土壤线虫功能群结构，进而影响生态系统服务（碳储量、氮矿化、植物生物量）？</div>
+  </div>
+
+  <!-- Logic Framework -->
+  <div class="logic-frame">
+    <div class="logic-title">Conceptual Framework — Figure 1a</div>
+    <div class="logic-chain">
+      <div class="logic-node lnode-amber">城市化<br>管理干扰梯度<br><small style="font-weight:400;font-size:9.5px;">修剪·施肥·灌溉</small></div>
+      <div style="width:20px;flex-shrink:0;"></div>
+      <div class="logic-node lnode-green">线虫<br>功能群结构<br><small style="font-weight:400;font-size:9.5px;">MI · NCR · 丰度</small></div>
+      <div style="width:20px;flex-shrink:0;"></div>
+      <div class="logic-node lnode-blue">生态系统<br>服务<br><small style="font-weight:400;font-size:9.5px;">SOC · N · 生物量</small></div>
+    </div>
+    <div class="logic-method">核心统计方法：野外调查 + Pearson/Spearman 相关 + 多元回归 + 结构方程模型（piecewiseSEM, R）</div>
+  </div>
+
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-label">Research Steps</div>
+    <div class="sec-divider-line"></div>
+  </div>
+
+  <!-- ── Step 1 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-head-right">
+        <div class="step-title">科学假设的建立与预测</div>
+        <div class="step-purpose">锚定可检验的定向预测，使研究方向不受数据驱动偏倚影响</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="hyp-box">
+        <div class="hyp-label">Hypotheses — A 系列（预注册于 OSF）</div>
+        <div class="hyp-row">
+          <span class="hyp-tag">H<sub>A1</sub></span>
+          <span>杂食性线虫（omnivores）相对丰度与土壤有机碳（SOC）正相关（β &gt; 0, <i>p</i> &lt; 0.05）。<br>
+          <span style="color:var(--nature-light);font-size:11px;">机制：高营养级线虫抑制微生物过度取食 → 有机质稳定化（priming effect 降低）→ SOC 累积。</span></span>
+        </div>
+        <div class="hyp-row">
+          <span class="hyp-tag">H<sub>A2</sub></span>
+          <span>食细菌线虫（bacterivores）丰度与土壤有效氮（NH₄⁺-N + NO₃⁻-N）正相关。<br>
+          <span style="color:var(--nature-light);font-size:11px;">机制：细菌取食 → 微生物胞内氮释放（mineralization-immobilization turnover）→ 有效态氮增加。</span></span>
+        </div>
+        <div class="hyp-row">
+          <span class="hyp-tag">H<sub>A3</sub></span>
+          <span>NCR（= 食细菌/（食细菌+食真菌））↓ 与 SOC ↑ 正相关。<br>
+          <span style="color:var(--nature-light);font-size:11px;">机制：真菌通道主导（NCR 低）→ 缓慢分解 → 碳储量高（Wall et al. 2010, <i>Nature</i>）。</span></span>
+        </div>
+      </div>
+      <div class="ref-quote">
+        <b>Wang et al. (2019) <i>Global Change Biology</i></b>：放牧干扰解耦线虫功能群与生态系统功能关系——城市管理干扰是否具有类似的解耦效应？此为本研究的核心创新切入点。
+      </div>
+      <div class="ref-quote">
+        <b>Ferris et al. (2001) <i>Applied Soil Ecology</i></b>：MI 与 NCR 的原始定义与计算框架；<b>Yeates et al. (1993) <i>Nematology</i></b>：功能群分类标准（食性基础）。
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 2 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-head-right">
+        <div class="step-title">样地选择：建立管理强度梯度</div>
+        <div class="step-purpose">为 SEM 提供充分的自变量变异，是统计效力的基础</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <table class="data-table">
+        <caption>Table 1 · 样地设计方案（城市 × 管理强度 × 样地数）</caption>
+        <tr>
+          <th>绿地类型</th>
+          <th>管理强度</th>
+          <th>主要干扰</th>
+          <th>样地数</th>
+          <th>最低样本量依据</th>
+        </tr>
+        <tr>
+          <td>城市中心公园</td>
+          <td><span class="tag red">高</span></td>
+          <td>每月修剪·NPK 施肥·自动灌溉</td>
+          <td class="num">≥6</td>
+          <td>G*Power：<i>f</i>²=0.35, α=0.05, power=0.80 → <i>n</i>=16</td>
+        </tr>
+        <tr>
+          <td>城郊居民区绿地</td>
+          <td><span class="tag" style="background:#fff9e6;color:#a16207;border-color:#fcd34d;">中</span></td>
+          <td>季度修剪·偶发施肥</td>
+          <td class="num">≥6</td>
+          <td rowspan="3" style="vertical-align:middle; font-size:10.5px; color:var(--nature-light); font-style:italic;">总计 ≥18 样地；每样地采 5×5 m 网格内 5 个土芯（0–20 cm），混合为 1 个样品</td>
+        </tr>
+        <tr>
+          <td>城郊废弃 / 自然绿地</td>
+          <td><span class="tag green">低</span></td>
+          <td>无管理·自然演替</td>
+          <td class="num">≥6</td>
+        </tr>
+      </table>
+      <div class="method-box">
+        <div class="method-title">采样方案 — Methods 节选</div>
+        <div class="method-row"><span class="method-key">采样深度</span><span class="method-val">0–10 cm（活性层）+ 10–20 cm（亚表层），分层处理</span></div>
+        <div class="method-row"><span class="method-key">线虫提取</span><span class="method-val">Baermann 漏斗法，48 h 提取，0.5 M sucrose 离心（Whitehead & Hemming, 1965）</span></div>
+        <div class="method-row"><span class="method-key">鉴定分辨率</span><span class="method-val">属级形态鉴定（≥100 条/样），功能群按 Yeates et al. (1993) 归类</span></div>
+        <div class="method-row"><span class="method-key">管理强度量化</span><span class="method-val">修剪频次（次/年）、N 施用量（kg ha⁻¹ yr⁻¹）、灌溉量（mm yr⁻¹）加权合成 Management Intensity Index（MII；范围 0–1）</span></div>
+        <div class="method-row"><span class="method-key">采样季节</span><span class="method-val">春季（4月）+ 秋季（10月）各 1 次，取均值以消除季节效应</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 3 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-head-right">
+        <div class="step-title">三类指标测量</div>
+        <div class="step-purpose">完整获取自变量、因变量与协变量，为多元建模提供充足输入</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <table class="data-table">
+        <caption>Table 2 · 测量指标清单与分析方法</caption>
+        <tr>
+          <th>类别</th>
+          <th>指标</th>
+          <th>分析方法 / 仪器</th>
+          <th>单位</th>
+        </tr>
+        <tr>
+          <td rowspan="4" style="font-weight:700;color:var(--accent-green);">线虫<br>（自变量）</td>
+          <td>功能群相对丰度（5类）</td>
+          <td>形态鉴定 + 计数</td>
+          <td>% total</td>
+        </tr>
+        <tr>
+          <td>成熟度指数 MI</td>
+          <td>Ferris et al. (2001) 公式</td>
+          <td>无量纲</td>
+        </tr>
+        <tr>
+          <td>分解通道比 NCR</td>
+          <td>BF/(BF+FF)；BF=食细菌，FF=食真菌</td>
+          <td>0–1</td>
+        </tr>
+        <tr>
+          <td>总线虫密度</td>
+          <td>计数/100 g 干土</td>
+          <td>ind. 100g⁻¹</td>
+        </tr>
+        <tr>
+          <td rowspan="4" style="font-weight:700;color:var(--accent-blue);">生态系统<br>服务（因变量）</td>
+          <td>土壤有机碳 SOC</td>
+          <td>元素分析仪（CHNS）</td>
+          <td>g C kg⁻¹</td>
+        </tr>
+        <tr>
+          <td>全氮 TN / 有效氮</td>
+          <td>凯氏定氮 / KCl 浸提-比色</td>
+          <td>g N kg⁻¹ / mg kg⁻¹</td>
+        </tr>
+        <tr>
+          <td>潜在氮矿化速率</td>
+          <td>厌氧培养 7 d（Stanford & Smith, 1972）</td>
+          <td>mg N kg⁻¹ d⁻¹</td>
+        </tr>
+        <tr>
+          <td>植物地上生物量</td>
+          <td>0.25 m² 样方收割，65°C 烘干称重</td>
+          <td>g DW m⁻²</td>
+        </tr>
+        <tr>
+          <td rowspan="5" style="font-weight:700;color:var(--nature-mid);">环境<br>协变量（控制）</td>
+          <td>土壤 pH</td>
+          <td>pH 计（水土比 2.5:1）</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>有机质 SOM</td>
+          <td>灼烧失重法（LOI, 550°C）</td>
+          <td>%</td>
+        </tr>
+        <tr>
+          <td>土壤含水量 SWC</td>
+          <td>105°C 烘干法</td>
+          <td>%</td>
+        </tr>
+        <tr>
+          <td>容重 BD</td>
+          <td>环刀法（100 cm³）</td>
+          <td>g cm⁻³</td>
+        </tr>
+        <tr>
+          <td>微生物生物量碳 MBC</td>
+          <td>氯仿熏蒸-K₂SO₄ 浸提</td>
+          <td>mg C kg⁻¹</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 4 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div class="step-head-right">
+        <div class="step-title">定量模型构建（三层递进）</div>
+        <div class="step-purpose">从相关筛选到因果路径量化，逐层提升推断力</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="method-box">
+        <div class="method-title">Layer 1 · 相关性筛选（探索阶段）</div>
+        <ul class="body-list">
+          <li>Pearson 相关（正态数据）/ Spearman 秩相关（非正态，线虫密度通常需 log 转换）</li>
+          <li>多重检验校正：Benjamini-Hochberg FDR（α=0.05）；R 包 <code>corrplot</code> 可视化相关矩阵</li>
+          <li>输出：显著变量名单，为后续多元回归筛选输入变量</li>
+        </ul>
+      </div>
+      <div class="method-box" style="margin-top:8px;">
+        <div class="method-title">Layer 2 · 多元线性回归（量化增量解释力）</div>
+        <ul class="body-list">
+          <li>基础模型（环境因子）vs. 加入线虫变量后的完整模型，对比 ΔR²</li>
+          <li>逐步回归（AIC 准则）+ 方差膨胀因子 VIF &lt; 5（检验多重共线性）</li>
+          <li>标准化回归系数（β）反映各线虫功能群的相对贡献</li>
+        </ul>
+      </div>
+      <div class="method-box" style="margin-top:8px;">
+        <div class="method-title">Layer 3 · 结构方程模型（SEM）——核心分析</div>
+        <div class="sem-path">
+          <div class="path-label">拟议 SEM 路径（piecewiseSEM v2.3, R）</div>
+          MII <span class="sem-arrow">──(γ₁)──▶</span> MI<br>
+          MII <span class="sem-arrow">──(γ₂)──▶</span> NCR<br>
+          MII <span class="sem-arrow">──(γ₃)──▶</span> SOM<span class="path-coef">  ← direct pathway</span><br>
+          MI  <span class="sem-arrow">──(β₁)──▶</span> SOC<br>
+          NCR <span class="sem-arrow">──(β₂)──▶</span> SOC<br>
+          MI  <span class="sem-arrow">──(β₃)──▶</span> N_min<br>
+          SOM <span class="sem-arrow">──(β₄)──▶</span> SOC<span class="path-coef">  ← co-predictor</span>
+        </div>
+        <ul class="body-list" style="margin-top:4px;">
+          <li>总效应 = 直接效应 + 间接效应（Bootstrap 5,000 次，95% CI）</li>
+          <li>模型适配检验：Fisher's C 统计量 / RMSEA &lt; 0.08 / CFI &gt; 0.95</li>
+          <li>Shipley's d-sep 检验各条件独立声明（CIs）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 5 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div class="step-head-right">
+        <div class="step-title">模型验证与跨城市推广</div>
+        <div class="step-purpose">检验模型泛化能力，区分城市特异性与普适性规律</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <ul class="body-list">
+        <li><b>内部验证</b>：留一法交叉验证（LOO-CV）评估预测误差（RMSE/MAE）；Bootstrap 95% CI 检验路径系数稳定性</li>
+        <li><b>外部验证</b>：另一城市（气候相似）独立采样 ≥9 个样地，以本研究 SEM 系数预测 SOC 和 N_min，计算预测 R² 和 RMSE</li>
+        <li><b>效应量评估</b>：Cohen's <i>f</i>² 量化线虫对生态系统服务的效应大小（&gt;0.35 = 大效应）</li>
+        <li><b>敏感性分析</b>：改变 MII 权重方案，检验 SEM 路径系数稳健性</li>
+      </ul>
+      <div class="output-card">
+        <div class="out-title">Expected Outputs</div>
+        <div class="out-item"><span class="out-bullet">◆</span><span>城市绿地线虫功能群—生态系统服务定量预测模型（SEM路径图 + 路径系数表）</span></div>
+        <div class="out-item"><span class="out-bullet">◆</span><span>验证 MI / NCR 在城市高干扰土壤中的适用边界</span></div>
+        <div class="out-item"><span class="out-bullet">◆</span><span>城市管理强度对线虫功能群的影响分级标准（参考值）</span></div>
+        <div class="journal-target">Target journals: <i>Journal of Applied Ecology</i> · <i>Functional Ecology</i> · <i>Soil Biology and Biochemistry</i></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-a -->
+
+
+<!-- ══════════════════════════════════════════
+     PANEL B
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-b">
+
+  <!-- Research Question -->
+  <div class="rq-box blue">
+    <div class="rq-label">Research Question B</div>
+    <div class="rq-text">城市化导致捕食性/杂食性线虫丧失，如何通过微生物群落结构改变进而影响碳氮循环？（因果机制验证）</div>
+  </div>
+
+  <!-- Logic Framework -->
+  <div class="logic-frame">
+    <div class="logic-title">Conceptual Framework — Figure 1b</div>
+    <div class="logic-chain">
+      <div class="logic-node lnode-amber">城市化<br>高营养级线虫↓<br><small style="font-weight:400;font-size:9.5px;">捕食性↓45%·杂食性↓60%</small></div>
+      <div style="width:20px;flex-shrink:0;"></div>
+      <div class="logic-node lnode-blue">微生物群落<br>结构改变<br><small style="font-weight:400;font-size:9.5px;">细菌过度取食？群落崩溃？</small></div>
+      <div style="width:20px;flex-shrink:0;"></div>
+      <div class="logic-node lnode-green">碳氮循环<br>功能改变<br><small style="font-weight:400;font-size:9.5px;">碳矿化↑ · 碳储量↓</small></div>
+    </div>
+    <div class="logic-method">核心方法：野外 SEM 中介分析 → 微宇宙（microcosm）实验 → ¹³C-PLFA 稳定同位素追踪</div>
+  </div>
+
+  <div class="sec-divider">
+    <div class="sec-divider-line"></div>
+    <div class="sec-divider-label">Research Steps</div>
+    <div class="sec-divider-line"></div>
+  </div>
+
+  <!-- ── Step 1 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num blue-bg">1</div>
+      <div class="step-head-right">
+        <div class="step-title">机制假设建立——因果逻辑链</div>
+        <div class="step-purpose">明确可通过实验操控与测量的因果路径，制定预注册预测</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="hyp-box blue">
+        <div class="hyp-label blue">Hypotheses — B 系列（预注册于 OSF）</div>
+        <div class="hyp-row">
+          <span class="hyp-tag blue">H<sub>B1</sub></span>
+          <span>捕食性线虫丧失 → 微生物生物量碳（MBC）↓ + 细菌多样性 Shannon-H' ↓（处理组 vs 对照，ANOVA <i>p</i> &lt; 0.05）。<br>
+          <span style="color:var(--nature-light);font-size:11px;">机制：顶级捕食者移除 → 细菌过度取食 → 微生物周转加速 → MBC 净减少（trophic cascade hypothesis）。</span></span>
+        </div>
+        <div class="hyp-row">
+          <span class="hyp-tag blue">H<sub>B2</sub></span>
+          <span>捕食性线虫丧失 → 土壤 CO₂ 呼吸速率↑（短期），SOC ↓（长期，>4 周）。</span>
+        </div>
+        <div class="hyp-row">
+          <span class="hyp-tag blue">H<sub>B3</sub></span>
+          <span>¹³C-葡萄糖在无捕食者处理中进入 ¹³CO₂ 的速率 > 有捕食者处理（δ¹³C-CO₂ 比较）。</span>
+        </div>
+      </div>
+      <div class="ref-quote">
+        <b>Mikola &amp; Setälä (1998) <i>Ecology</i></b>：室内模拟未检测到线虫营养级联。
+        <b>Morriën et al. (2017) <i>Nature Communications</i></b>：野外恢复样地中食物网结构决定碳循环效率。
+        <br>→ 两者矛盾来源于实验尺度差异；城市野外条件下的因果验证仍是空白，为本研究核心创新点。
+      </div>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 2 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num blue-bg">2</div>
+      <div class="step-head-right">
+        <div class="step-title">野外 SEM：中介效应检验</div>
+        <div class="step-purpose">提供相关性证据，为微cosm实验提供处理设计依据</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="sem-path">
+        <div class="path-label">中介路径（Mediation analysis via piecewiseSEM）</div>
+        城市化强度(MII) <span class="sem-arrow blue">──(a)──▶</span> 捕食性线虫密度<br>
+        捕食性线虫密度 <span class="sem-arrow blue">──(b₁)──▶</span> 微生物群落结构(MBC, Shannon-H')<br>
+        微生物群落结构  <span class="sem-arrow blue">──(b₂)──▶</span> 土壤有机碳 SOC<br>
+        <span class="path-coef">间接效应 = a × b₁ × b₂  ← 是否显著？（Bootstrap 5,000次）</span>
+      </div>
+      <ul class="body-list blue">
+        <li>微生物群落结构：16S rRNA 扩增子测序（Illumina MiSeq，V3-V4 区）+ PLFA 磷脂脂肪酸谱</li>
+        <li>细菌/真菌生物量比（B:F ratio，由 PLFA 计算）作为中介变量候选</li>
+        <li>中介效应决策逻辑：<br>
+          &nbsp;&nbsp;&nbsp;— 间接效应 95% CI 不含 0 → 进入 Step 3 实验验证<br>
+          &nbsp;&nbsp;&nbsp;— 间接效应不显著 → 修正中介变量（如改用细菌群落 β-多样性），重新建模</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 3 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num blue-bg">3</div>
+      <div class="step-head-right">
+        <div class="step-title">微宇宙（Microcosm）实验——因果验证核心</div>
+        <div class="step-purpose">通过操控实验建立因果推断，不可被野外相关性替代</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <table class="data-table">
+        <caption>Table 3 · Microcosm 实验处理设计（完全随机区组，3–5 重复/处理）</caption>
+        <tr>
+          <th>处理编号</th>
+          <th>捕食性线虫</th>
+          <th>杂食性线虫</th>
+          <th>食细菌线虫</th>
+          <th>生物学意义</th>
+        </tr>
+        <tr>
+          <td>T1 · 全组分对照</td>
+          <td>原密度</td><td>原密度</td><td>原密度</td>
+          <td>模拟自然绿地食物网</td>
+        </tr>
+        <tr>
+          <td>T2 · 去除捕食者</td>
+          <td style="color:var(--nature-red);font-weight:600;">去除</td><td>原密度</td><td>原密度</td>
+          <td>测试捕食者丧失效应</td>
+        </tr>
+        <tr>
+          <td>T3 · 去除杂食者</td>
+          <td>原密度</td><td style="color:var(--nature-red);font-weight:600;">去除</td><td>原密度</td>
+          <td>区分营养级来源</td>
+        </tr>
+        <tr>
+          <td>T4 · 去除高营养级</td>
+          <td style="color:var(--nature-red);font-weight:600;">去除</td><td style="color:var(--nature-red);font-weight:600;">去除</td><td>原密度</td>
+          <td>模拟重度城市化</td>
+        </tr>
+        <tr>
+          <td>T5 · 无线虫对照</td>
+          <td style="color:var(--nature-red);font-weight:600;">去除</td><td style="color:var(--nature-red);font-weight:600;">去除</td><td style="color:var(--nature-red);font-weight:600;">去除</td>
+          <td>纯微生物基线</td>
+        </tr>
+      </table>
+      <div class="method-box" style="margin-top:8px;">
+        <div class="method-title">实验设计细节</div>
+        <div class="method-row"><span class="method-key">容器规格</span><span class="method-val">聚丙烯圆柱（内径 10 cm，高 15 cm），装 200 g 灭菌城市土壤（121°C, 45 min × 2次）</span></div>
+        <div class="method-row"><span class="method-key">线虫操控</span><span class="method-val">蔗糖离心（2,000×g, 2 min）分离后回接目标功能群；去除处理过滤（20 μm 网筛）</span></div>
+        <div class="method-row"><span class="method-key">微生物接种</span><span class="method-val">新鲜土壤浸提液过 20 μm 筛（去除线虫保留微生物），重新接种至灭菌土</span></div>
+        <div class="method-row"><span class="method-key">培养条件</span><span class="method-val">25°C 恒温，60% WHC，黑暗，4–8 周（覆盖 ≥2 线虫世代，世代时间 ~2 周）</span></div>
+        <div class="method-row"><span class="method-key">测量时间节点</span><span class="method-val">第 0、7、14、28、56 天取样；CO₂ 每 3 天以 LI-COR 气体分析仪测定（30 min 密闭累积）</span></div>
+        <div class="method-row"><span class="method-key">终点测量</span><span class="method-val">线虫丰度（计数）、PLFA（MBC, B:F ratio）、16S 测序、SOC（元素分析仪）、NH₄⁺-N</span></div>
+      </div>
+      <div class="fig-caption">Figure 2 legend · 各处理 CO₂ 呼吸速率随培养时间的变化（均值 ± SE，n=4–5）；误差带为 95% CI；字母表示 Tukey HSD 差异显著性（α=0.05）。</div>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 4 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num blue-bg">4</div>
+      <div class="step-head-right">
+        <div class="step-title">¹³C 稳定同位素追踪（SIP）</div>
+        <div class="step-purpose">直接追踪碳流通路径，提供最高级别因果证据（mechanistic evidence）</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="iso-chain">
+        <span>¹³C-葡萄糖（99 atom% ¹³C, Sigma-Aldrich）注射至 T1 / T4 微cosm 土壤表面</span>
+        <span class="iso-indent"><span class="iso-arrow">↓</span>  细菌吸收¹³C → 纳入细菌生物量（PLFA 分析 δ¹³C-PLFA）</span>
+        <span class="iso-indent"><span class="iso-arrow">↓</span>  捕食性线虫取食细菌 → δ¹³C-线虫组织（IRMS 元素分析仪）</span>
+        <span class="iso-indent"><span class="iso-arrow">↓</span>  呼吸释放 → <span class="iso-measure">δ¹³C-CO₂（离线收集，IRMS 测定，每 6 h 采样）</span></span>
+        <span class="iso-indent"><span class="iso-arrow">↓</span>  残余稳定化 → <span class="iso-measure">δ¹³C-土壤有机碳（终点破坏性取样）</span></span>
+      </div>
+      <div class="method-box" style="margin-top:8px;">
+        <div class="method-title">同位素追踪参数</div>
+        <div class="method-row"><span class="method-key">添加剂量</span><span class="method-val">50 mg ¹³C-glucose kg⁻¹ dry soil（≈2% 土壤 MBC，不干扰碳库结构）</span></div>
+        <div class="method-row"><span class="method-key">追踪时长</span><span class="method-val">0–7 天（快速周转阶段）+ 第 28 天（稳定化阶段）</span></div>
+        <div class="method-row"><span class="method-key">PLFA 分析</span><span class="method-val">标志性 PLFA：i15:0, a15:0（革兰氏阳性菌）；cy17:0, 18:1ω9（革兰氏阴性菌）；18:2ω6（真菌）</span></div>
+        <div class="method-row"><span class="method-key">对照组</span><span class="method-val">¹²C-葡萄糖等量注射（天然丰度对照），校正同位素分馏效应</span></div>
+        <div class="method-row"><span class="method-key">碳驻留时间</span><span class="method-val">MRT（Mean Residence Time）= ¹³C-SOC / ¹³C-CO₂ 通量，比较 T1 vs T4</span></div>
+      </div>
+      <ul class="body-list blue" style="margin-top:6px;">
+        <li><b>预期结果（H<sub>B3</sub>）</b>：T1（有捕食者）中 δ¹³C-CO₂ 在第 1–3 天高于 T4，但第 14–28 天 ¹³C-SOC 高于 T4，说明捕食者的存在通过加速细菌周转促进了碳的短期矿化但长期稳定化。</li>
+        <li><b>替代解释排除</b>：若 T4 中 δ¹³C-PLFA 未显著变化而 δ¹³C-CO₂ 仍升高，则碳矿化加速来自线虫呼吸而非级联效应，需修订机制假设。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-connector"><div class="connector-arrow"></div></div>
+
+  <!-- ── Step 5 ── -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num blue-bg">5</div>
+      <div class="step-head-right">
+        <div class="step-title">整合证据链——多级推断框架</div>
+        <div class="step-purpose">四重证据叠加，通过 Weight-of-Evidence 方法建立可发表的因果结论</div>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="evidence-ladder">
+        <div class="ev-row">
+          <div class="ev-level" style="background:#fbbf24;">I</div>
+          <div class="ev-label">野外相关性（Pearson/Spearman）</div>
+          <div class="ev-bar-wrap"><div class="ev-bar" style="width:30%;background:#fbbf24;"></div></div>
+          <div class="ev-strength">弱</div>
+          <div class="ev-desc">仅显示共变关系，无法排除混淆</div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-level" style="background:#60a5fa;">II</div>
+          <div class="ev-label">SEM 中介效应</div>
+          <div class="ev-bar-wrap"><div class="ev-bar" style="width:55%;background:#60a5fa;"></div></div>
+          <div class="ev-strength">中</div>
+          <div class="ev-desc">量化间接路径，但仍受混淆变量威胁</div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-level" style="background:#34d399;">III</div>
+          <div class="ev-label">Microcosm 操控实验</div>
+          <div class="ev-bar-wrap"><div class="ev-bar" style="width:78%;background:#34d399;"></div></div>
+          <div class="ev-strength">高</div>
+          <div class="ev-desc">操控变量，因果可靠，但生态真实性有限</div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-level" style="background:#16a34a;">IV</div>
+          <div class="ev-label">¹³C 同位素追踪</div>
+          <div class="ev-bar-wrap"><div class="ev-bar" style="width:100%;background:#16a34a;"></div></div>
+          <div class="ev-strength">最强</div>
+          <div class="ev-desc">直接追踪物质流，机理层面确认因果</div>
+        </div>
+      </div>
+      <div class="method-box" style="margin-top:10px;">
+        <div class="method-title">Weight-of-Evidence 综合判断框架</div>
+        <ul class="body-list blue" style="margin-top:0;">
+          <li>若 I–IV 均支持 H<sub>B</sub> → 强因果结论，可直接支持 Nature/GCB 投稿</li>
+          <li>若 III 不显著但 IV 显著 → 修订：效应量小但机制存在，讨论效应大小阈值</li>
+          <li>若 I–II 显著但 III–IV 不显著 → 相关性可能由共同原因驱动，撤回因果声明</li>
+        </ul>
+      </div>
+      <div class="output-card">
+        <div class="out-title">Expected Outputs</div>
+        <div class="out-item"><span class="out-bullet">◆</span><span>揭示城市线虫食物网—微生物互作的完整因果机制（野外 + 实验 + 同位素三层证据）</span></div>
+        <div class="out-item"><span class="out-bullet">◆</span><span>量化捕食性/杂食性线虫丧失对碳驻留时间（MRT）的影响（¹³C 追踪，具体数值）</span></div>
+        <div class="out-item"><span class="out-bullet">◆</span><span>鉴别城市土壤食物网级联效应的存在条件（营养级组成阈值）</span></div>
+        <div class="journal-target">Target journals: <i>Ecology</i> · <i>Global Change Biology</i> · <i>Nature Communications</i></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-b -->
+
+<script>
+function switchTab(id) {
+  document.getElementById('tab-a').className = 'tab-btn' + (id==='a' ? ' active-a' : '');
+  document.getElementById('tab-b').className = 'tab-btn' + (id==='b' ? ' active-b' : '');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+}
+</script>
+</body>
+</html>
