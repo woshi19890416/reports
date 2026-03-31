@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微生物生命史策略与土壤碳循环</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        @media (min-width: 420px) {
+            body {
+                padding: 20px 0;
+            }
+            .container {
+                border-radius: 20px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            }
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 28px 24px;
+            color: white;
+            position: relative;
+        }
+        
+        .journal-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        
+        .title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+        
+        .doi {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 12px;
+        }
+        
+        /* Section styling */
+        .section {
+            padding: 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1a1a2e;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        /* Core Problem */
+        .problem-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff0f0 100%);
+            border-left: 3px solid #e53e3e;
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 16px;
+        }
+        
+        .problem-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #c53030;
+            margin-bottom: 8px;
+        }
+        
+        .problem-text {
+            font-size: 13px;
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+        
+        /* Y-A-S Framework */
+        .framework-intro {
+            font-size: 13px;
+            color: #4a4a4a;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .strategy-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .strategy-card {
+            border-radius: 16px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .strategy-y {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+        }
+        
+        .strategy-y::before {
+            background: linear-gradient(90deg, #38a169, #319795);
+        }
+        
+        .strategy-a {
+            background: linear-gradient(135deg, #fffaf0 0%, #fff5eb 100%);
+        }
+        
+        .strategy-a::before {
+            background: linear-gradient(90deg, #dd6b20, #d69e2e);
+        }
+        
+        .strategy-s {
+            background: linear-gradient(135deg, #f5f3ff 0%, #faf5ff 100%);
+        }
+        
+        .strategy-s::before {
+            background: linear-gradient(90deg, #805ad5, #6b46c1);
+        }
+        
+        .strategy-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .strategy-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .strategy-y .strategy-icon {
+            background: #38a169;
+            color: white;
+        }
+        
+        .strategy-a .strategy-icon {
+            background: #dd6b20;
+            color: white;
+        }
+        
+        .strategy-s .strategy-icon {
+            background: #805ad5;
+            color: white;
+        }
+        
+        .strategy-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .strategy-y .strategy-name {
+            color: #276749;
+        }
+        
+        .strategy-a .strategy-name {
+            color: #c05621;
+        }
+        
+        .strategy-s .strategy-name {
+            color: #553c9a;
+        }
+        
+        .strategy-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .strategy-traits {
+            font-size: 11px;
+            color: #888;
+            line-height: 1.5;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(0,0,0,0.1);
+        }
+        
+        .trait-label {
+            font-weight: 600;
+            color: #444;
+        }
+        
+        /* Scenario Section */
+        .scenario-card {
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scenario-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .scenario-y {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border: 1px solid #c6f6d5;
+        }
+        
+        .scenario-a {
+            background: linear-gradient(135deg, #fffaf0 0%, #fff5eb 100%);
+            border: 1px solid #feebc8;
+        }
+        
+        .scenario-s {
+            background: linear-gradient(135deg, #f5f3ff 0%, #faf5ff 100%);
+            border: 1px solid #e9d8fd;
+        }
+        
+        .scenario-mixed {
+            background: linear-gradient(135deg, #fff5f5 0%, #fef5f5 100%);
+            border: 1px solid #fed7d7;
+        }
+        
+        .scenario-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        
+        .scenario-y .scenario-badge {
+            background: #38a169;
+            color: white;
+        }
+        
+        .scenario-a .scenario-badge {
+            background: #dd6b20;
+            color: white;
+        }
+        
+        .scenario-s .scenario-badge {
+            background: #805ad5;
+            color: white;
+        }
+        
+        .scenario-mixed .scenario-badge {
+            background: #e53e3e;
+            color: white;
+        }
+        
+        .scenario-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .scenario-y .scenario-title {
+            color: #276749;
+        }
+        
+        .scenario-a .scenario-title {
+            color: #c05621;
+        }
+        
+        .scenario-s .scenario-title {
+            color: #553c9a;
+        }
+        
+        .scenario-mixed .scenario-title {
+            color: #c53030;
+        }
+        
+        .scenario-condition {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .scenario-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .example-tag {
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .scenario-y .example-tag {
+            background: rgba(56, 161, 105, 0.12);
+            color: #276749;
+        }
+        
+        .scenario-a .example-tag {
+            background: rgba(221, 107, 32, 0.12);
+            color: #c05621;
+        }
+        
+        .scenario-s .example-tag {
+            background: rgba(128, 90, 213, 0.12);
+            color: #553c9a;
+        }
+        
+        .scenario-mixed .example-tag {
+            background: rgba(229, 62, 62, 0.1);
+            color: #c53030;
+        }
+        
+        /* 2x2 Matrix */
+        .matrix-container {
+            background: #fafafa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+        
+        .matrix-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+            gap: 3px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        
+        .matrix-header {
+            font-size: 10px;
+            font-weight: 600;
+            color: #888;
+            text-align: center;
+            padding: 8px 4px;
+        }
+        
+        .matrix-row-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+        }
+        
+        .matrix-cell {
+            border-radius: 10px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+        
+        .cell-y {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+        }
+        
+        .cell-a {
+            background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%);
+        }
+        
+        .cell-s {
+            background: linear-gradient(135deg, #f5f3ff 0%, #e9d8fd 100%);
+        }
+        
+        .cell-sa {
+            background: linear-gradient(135deg, #fef5f5 0%, #fed7d7 100%);
+        }
+        
+        .cell-strategy {
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        
+        .cell-y .cell-strategy { color: #276749; }
+        .cell-a .cell-strategy { color: #c05621; }
+        .cell-s .cell-strategy { color: #553c9a; }
+        .cell-sa .cell-strategy { color: #c53030; }
+        
+        .cell-desc {
+            font-size: 9px;
+            color: #666;
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+        
+        .matrix-axis-label {
+            font-size: 9px;
+            color: #aaa;
+            text-align: center;
+            margin-top: 4px;
+        }
+        
+        /* Trade-offs Diagram */
+        .tradeoff-container {
+            background: #fafafa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .tradeoff-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .triangle-diagram {
+            position: relative;
+            width: 200px;
+            height: 180px;
+            margin: 0 auto;
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 173px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .triangle-inner {
+            position: absolute;
+            top: 8px;
+            left: -88px;
+            width: 0;
+            height: 0;
+            border-left: 88px solid transparent;
+            border-right: 88px solid transparent;
+            border-bottom: 153px solid #f7fafc;
+        }
+        
+        .vertex {
+            position: absolute;
+            width: 60px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        .vertex-y {
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #38a169;
+        }
+        
+        .vertex-a {
+            bottom: 10px;
+            left: -5px;
+            color: #dd6b20;
+        }
+        
+        .vertex-s {
+            bottom: 10px;
+            right: -5px;
+            color: #805ad5;
+        }
+        
+        .tradeoff-note {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+        
+        /* Carbon Impact */
+        .impact-grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .impact-item {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .impact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .impact-y .impact-icon {
+            background: #c6f6d5;
+        }
+        
+        .impact-a .impact-icon {
+            background: #feebc8;
+        }
+        
+        .impact-s .impact-icon {
+            background: #e9d8fd;
+        }
+        
+        .impact-content h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .impact-y h4 {
+            color: #276749;
+        }
+        
+        .impact-a h4 {
+            color: #c05621;
+        }
+        
+        .impact-s h4 {
+            color: #553c9a;
+        }
+        
+        .impact-content p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Methods */
+        .method-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .method-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .step-num {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            font-size: 12px;
+            color: #444;
+            line-height: 1.5;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .tool-tag {
+            background: #edf2f7;
+            padding: 8px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            text-align: center;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        /* Model Integration */
+        .model-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 20px;
+            color: white;
+        }
+        
+        .model-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .model-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .model-node {
+            background: rgba(255,255,255,0.1);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .model-node::after {
+            content: '↓';
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            opacity: 0.5;
+        }
+        
+        .model-node:last-child::after {
+            display: none;
+        }
+        
+        /* Key Insights */
+        .insight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .insight-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        
+        .insight-bullet {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        
+        .insight-text {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.7;
+        }
+        
+        /* Conclusion */
+        .conclusion-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #9ae6b4;
+        }
+        
+        .conclusion-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #276749;
+            margin-bottom: 12px;
+        }
+        
+        .conclusion-text {
+            font-size: 13px;
+            color: #444;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 24px;
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 11px;
+            color: #888;
+            line-height: 1.6;
+        }
+        
+        /* Highlight */
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(102, 126, 234, 0.2) 60%);
+            padding: 0 2px;
+        }
+        
+        .highlight-green {
+            background: linear-gradient(180deg, transparent 60%, rgba(56, 161, 105, 0.2) 60%);
+            padding: 0 2px;
+        }
+        
+        .highlight-orange {
+            background: linear-gradient(180deg, transparent 60%, rgba(221, 107, 32, 0.2) 60%);
+            padding: 0 2px;
+        }
+        
+        .highlight-purple {
+            background: linear-gradient(180deg, transparent 60%, rgba(128, 90, 213, 0.2) 60%);
+            padding: 0 2px;
+        }
+
+        /* Desktop: enlarge key typography */
+        @media (min-width: 540px) {
+            .header { padding: 40px 36px; }
+            .title { font-size: 24px; }
+            .subtitle { font-size: 14px; }
+            .section { padding: 32px 36px; }
+            .strategy-desc, .scenario-condition { font-size: 14px; }
+            .strategy-traits, .scenario-title { font-size: 13px; }
+            .impact-content p { font-size: 13px; }
+            .step-text { font-size: 13px; }
+            .insight-text, .conclusion-text { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="journal-badge">THE ISME JOURNAL</div>
+            <h1 class="title">Defining trait-based microbial strategies with consequences for soil carbon cycling under climate change</h1>
+            <p class="subtitle">定义基于性状的微生物策略及其对气候变化下土壤碳循环的影响</p>
+            <p class="doi">DOI: 10.1038/s41396-019-0510-0</p>
+        </div>
+        
+        <!-- Core Problem -->
+        <div class="section">
+            <div class="section-title">核心问题</div>
+            <div class="problem-box">
+                <div class="problem-title">预测挑战</div>
+                <div class="problem-text">微生物控制着植物碳输入的命运和土壤有机碳的稳定，但<span class="highlight">预测微生物过程的生态系统影响</span>仍是一个重大挑战。环境条件变化会改变微生物分解与碳稳定化之间的平衡。</div>
+            </div>
+            <div class="problem-box" style="background: linear-gradient(135deg, #f0f5ff 0%, #f0f8ff 100%); border-left-color: #4c51bf;">
+                <div class="problem-title" style="color: #4c51bf;">解决方案</div>
+                <div class="problem-text">通过识别基于<span class="highlight">微生物表型特征（性状）</span>的生命史策略，并将其纳入生态系统模型，可以应对这一挑战。</div>
+            </div>
+        </div>
+        
+        <!-- Y-A-S Framework -->
+        <div class="section">
+            <div class="section-title">Y-A-S 生命史策略框架</div>
+            <p class="framework-intro">借鉴植物生态学理论，文章提出微生物三维策略框架。不同环境条件选择不同策略，策略间存在<span class="highlight">生理权衡</span>。</p>
+            
+            <div class="strategy-cards">
+                <div class="strategy-card strategy-y">
+                    <div class="strategy-header">
+                        <div class="strategy-icon">Y</div>
+                        <div class="strategy-name">高产策略 High Yield</div>
+                    </div>
+                    <div class="strategy-desc">最大化生长效率，将资源投入生物合成过程，减少对应激耐受和资源获取的投资。</div>
+                    <div class="strategy-traits">
+                        <span class="trait-label">关键性状：</span>碳利用效率、生物量合成、核糖体蛋白合成、中心代谢途径
+                    </div>
+                </div>
+                
+                <div class="strategy-card strategy-a">
+                    <div class="strategy-header">
+                        <div class="strategy-icon">A</div>
+                        <div class="strategy-name">资源获取策略 Resource Acquisition</div>
+                    </div>
+                    <div class="strategy-desc">优先投资于细胞资源获取机制，生产胞外酶降解复杂资源，提高底物吸收能力。</div>
+                    <div class="strategy-traits">
+                        <span class="trait-label">关键性状：</span>胞外酶生产、ABC转运蛋白活性、碳水化合物活性酶(CAZy)
+                    </div>
+                </div>
+                
+                <div class="strategy-card strategy-s">
+                    <div class="strategy-header">
+                        <div class="strategy-icon">S</div>
+                        <div class="strategy-name">胁迫耐受策略 Stress Tolerance</div>
+                    </div>
+                    <div class="strategy-desc">优先投资于胁迫耐受机制，应对水分、温度、pH、盐度等非生物胁迫。</div>
+                    <div class="strategy-traits">
+                        <span class="trait-label">关键性状：</span>σ因子、分子伴侣、渗透压调节物、胞外聚合物(EPS)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scenario Dominance -->
+            <div style="margin-top: 24px;">
+                <div class="section-title" style="padding: 0 0 12px 0; border-bottom: none;">策略主导情景</div>
+                
+                <div class="scenario-card scenario-y">
+                    <div class="scenario-badge">Y 策略主导</div>
+                    <div class="scenario-title">高资源 + 低胁迫</div>
+                    <div class="scenario-condition">资源供给充足且环境条件适宜（适宜湿度、温度、pH等），微生物优先将碳投入生物量合成，实现高碳利用效率，最大化生长产量。</div>
+                    <div class="scenario-examples">
+                        <span class="example-tag">温带湿润森林</span>
+                        <span class="example-tag">农田耕作层</span>
+                        <span class="example-tag">根际高养分区</span>
+                        <span class="example-tag">长期培肥土壤</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card scenario-a">
+                    <div class="scenario-badge">A 策略主导</div>
+                    <div class="scenario-title">低资源 + 低胁迫</div>
+                    <div class="scenario-condition">环境条件虽适宜但资源匮乏，尤其是简单底物稀缺而复杂聚合物（纤维素、木质素）丰富。微生物需投资胞外酶"挖掘"养分，牺牲生长效率。</div>
+                    <div class="scenario-examples">
+                        <span class="example-tag">贫瘠矿质土壤</span>
+                        <span class="example-tag">高碳氮比枯落物层</span>
+                        <span class="example-tag">原生老龄林土壤</span>
+                        <span class="example-tag">有机质含量低的环境</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card scenario-s">
+                    <div class="scenario-badge">S 策略主导</div>
+                    <div class="scenario-title">高胁迫 + 高资源</div>
+                    <div class="scenario-condition">资源虽充足但非生物胁迫强烈（极端温度、干旱、盐碱、酸化）。微生物需将能量从生长转向合成渗透调节物、分子伴侣、胞外聚合物等以维持生存。</div>
+                    <div class="scenario-examples">
+                        <span class="example-tag">盐渍化农田</span>
+                        <span class="example-tag">酸雨影响区域</span>
+                        <span class="example-tag">冻土带</span>
+                        <span class="example-tag">季节性干旱土壤</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card scenario-mixed">
+                    <div class="scenario-badge">S+A 共同主导</div>
+                    <div class="scenario-title">高胁迫 + 低资源</div>
+                    <div class="scenario-condition">资源匮乏且胁迫强烈的最严酷环境。微生物同时投资胁迫耐受和资源获取，但Y策略被完全抑制——能量用于维持生存而非生长，碳利用效率和微生物源有机碳形成量极低。</div>
+                    <div class="scenario-examples">
+                        <span class="example-tag">荒漠土壤</span>
+                        <span class="example-tag">重度盐碱地</span>
+                        <span class="example-tag">极地冻土</span>
+                        <span class="example-tag">极度退化土地</span>
+                    </div>
+                </div>
+                
+                <!-- 2x2 Matrix -->
+                <div class="matrix-container">
+                    <div class="matrix-title">环境梯度 × 策略选择矩阵</div>
+                    <div class="matrix-grid">
+                        <div></div>
+                        <div class="matrix-header">低资源</div>
+                        <div class="matrix-header">高资源</div>
+                        
+                        <div class="matrix-row-label">低胁迫</div>
+                        <div class="matrix-cell cell-a">
+                            <div class="cell-strategy">A</div>
+                            <div class="cell-desc">投资酶系统<br>获取稀缺资源</div>
+                        </div>
+                        <div class="matrix-cell cell-y">
+                            <div class="cell-strategy">Y</div>
+                            <div class="cell-desc">最大化<br>生长效率</div>
+                        </div>
+                        
+                        <div class="matrix-row-label">高胁迫</div>
+                        <div class="matrix-cell cell-sa">
+                            <div class="cell-strategy">S+A</div>
+                            <div class="cell-desc">维持生存+挖掘资源<br>Y被抑制</div>
+                        </div>
+                        <div class="matrix-cell cell-s">
+                            <div class="cell-strategy">S</div>
+                            <div class="cell-desc">能量转向<br>胁迫防御</div>
+                        </div>
+                    </div>
+                    <div class="matrix-axis-label">← 资源可用性 →</div>
+                </div>
+            </div>
+            
+            <!-- Trade-offs -->
+            <div class="tradeoff-container">
+                <div class="tradeoff-title">性状权衡三角</div>
+                <div class="triangle-diagram">
+                    <div class="triangle">
+                        <div class="triangle-inner"></div>
+                    </div>
+                    <div class="vertex vertex-y">Y<br><span style="font-size:9px;font-weight:400">高产</span></div>
+                    <div class="vertex vertex-a">A<br><span style="font-size:9px;font-weight:400">获取</span></div>
+                    <div class="vertex vertex-s">S<br><span style="font-size:9px;font-weight:400">耐受</span></div>
+                </div>
+                <div class="tradeoff-note">
+                    资源获取投资降低生长效率<br>
+                    胁迫耐受投入以牺牲其他过程为代价
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carbon Impact -->
+        <div class="section">
+            <div class="section-title">对土壤碳循环的影响</div>
+            <div class="impact-grid">
+                <div class="impact-item impact-y">
+                    <div class="impact-icon">🌱</div>
+                    <div class="impact-content">
+                        <h4>Y策略 → 碳储存</h4>
+                        <p>最大化微生物生物量生产，产生的微生物残体通过有机-矿物相互作用或团聚体形成稳定化，<span class="highlight-green">促进土壤有机质积累</span>。</p>
+                    </div>
+                </div>
+                
+                <div class="impact-item impact-a">
+                    <div class="impact-icon">⚡</div>
+                    <div class="impact-content">
+                        <h4>A策略 → 碳损失</h4>
+                        <p>投资胞外酶生产加速有机物分解，在有机质较低环境中"挖掘"养分，<span class="highlight-orange">导致碳分解和损失加速</span>。</p>
+                    </div>
+                </div>
+                
+                <div class="impact-item impact-s">
+                    <div class="impact-icon">🛡️</div>
+                    <div class="impact-content">
+                        <h4>S策略 → 双重效应</h4>
+                        <p>复杂化合物如EPS有助于碳储存；简单相容性溶质则将投资从生长转移开，<span class="highlight-purple">可能减少土壤碳积累</span>。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Methods -->
+        <div class="section">
+            <div class="section-title">测量与验证方法</div>
+            <div class="method-flow">
+                <div class="method-step">
+                    <div class="step-num">1</div>
+                    <div class="step-text"><strong>定量生理学测定</strong><br>测量生长效率、酶活性、特定代谢物</div>
+                </div>
+                <div class="method-step">
+                    <div class="step-num">2</div>
+                    <div class="step-text"><strong>组学技术</strong><br>基因组学、转录组学、蛋白质组学、代谢组学</div>
+                </div>
+                <div class="method-step">
+                    <div class="step-num">3</div>
+                    <div class="step-text"><strong>种群与群落水平评估</strong><br>验证基因型-表型联系，量化群落性状分布</div>
+                </div>
+            </div>
+            
+            <div class="tools-grid">
+                <div class="tool-tag">宏基因组学</div>
+                <div class="tool-tag">转录组学</div>
+                <div class="tool-tag">蛋白质组学</div>
+                <div class="tool-tag">代谢组学</div>
+                <div class="tool-tag">LC-MS</div>
+                <div class="tool-tag">FT-ICR MS</div>
+                <div class="tool-tag">CAZy数据库</div>
+                <div class="tool-tag">稳定同位素</div>
+                <div class="tool-tag">生理测定</div>
+            </div>
+        </div>
+        
+        <!-- Model Integration -->
+        <div class="section">
+            <div class="section-title">模型整合路径</div>
+            <div class="model-box">
+                <div class="model-title">将Y-A-S策略纳入生态系统模型</div>
+                <div class="model-flow">
+                    <div class="model-node">性状权衡 + 环境变化输入</div>
+                    <div class="model-node">DEMENT/MIMICS模型模拟</div>
+                    <div class="model-node">群落响应预测</div>
+                    <div class="model-node">生态系统过程预测<br>(分解率、碳通量)</div>
+                    <div class="model-node">实验验证</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Key Insights -->
+        <div class="section">
+            <div class="section-title">关键洞察</div>
+            <div class="insight-list">
+                <div class="insight-item">
+                    <div class="insight-bullet"></div>
+                    <div class="insight-text">微生物代谢投资及性状权衡决定了微生物过程对<span class="highlight">生态系统水平碳通量</span>的贡献</div>
+                </div>
+                <div class="insight-item">
+                    <div class="insight-bullet"></div>
+                    <div class="insight-text">基于性状的生活史策略比基于分类学信息更能将<span class="highlight">微生物生态学与生态系统库和通量</span>联系起来</div>
+                </div>
+                <div class="insight-item">
+                    <div class="insight-bullet"></div>
+                    <div class="insight-text">生长效率可作为生态系统模型中的<span class="highlight">主响应性状</span>，整合群落生理过程</div>
+                </div>
+                <div class="insight-item">
+                    <div class="insight-bullet"></div>
+                    <div class="insight-text">Y-A-S框架可减少预测未来气候变化<span class="highlight">土壤碳反馈不确定性</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conclusion -->
+        <div class="section">
+            <div class="section-title">结论</div>
+            <div class="conclusion-box">
+                <div class="conclusion-title">Y-A-S框架的意义</div>
+                <div class="conclusion-text">
+                    Y-A-S框架是指导新的实证和模型研究的<span class="highlight-green">可检验方案</span>，用于理解驱动土壤碳通量的机制。通过将<span class="highlight-green">种群水平的响应性状与群落和生态系统过程</span>联系起来，该生命史理论可以提高对未来气候变化下土壤碳响应的预测理解能力。
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer-text">
+                基于 The ISME Journal (2019) 文章整理<br>
+                Defining trait-based microbial strategies with consequences<br>for soil carbon cycling under climate change
+            </p>
+        </div>
+    </div>
+</body>
+</html>
